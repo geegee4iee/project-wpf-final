@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +71,60 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DTO\Entity\Category.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Debt.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Distributor.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\FixedRegister.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\InterestOfYear.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Order.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\OrderDetail.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\PaymentDetail.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Product.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Province.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Sale.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Staff.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Stock.cs">
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Unilever.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unilever.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Unilever.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unilever.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Entity\Unilever.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unilever.edmx</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -85,6 +148,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="DTO\Entity\Unilever.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Unilever.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DTO\Entity\Unilever.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Unilever.edmx</DependentUpon>
+      <LastGenOutput>Unilever.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DTO\Entity\Unilever.edmx.diagram">
+      <DependentUpon>Unilever.edmx</DependentUpon>
+    </None>
+    <None Include="DTO\Entity\Unilever.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Unilever.edmx</DependentUpon>
+      <LastGenOutput>Unilever.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
