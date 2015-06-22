@@ -2,14 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unilever.DTO.Entity;
 
 namespace Unilever.DAO
 {
     class StaffDAO
     {
+        public List<Staff> GetAll()
+        {
+            using (UnileverEntities entity = new UnileverEntities())
+            {
+                return entity.Staffs.ToList();
+            }
+        }
+
         public bool Add(Staff staff)
         {
             using (UnileverEntities entity = new UnileverEntities())
@@ -76,7 +82,7 @@ namespace Unilever.DAO
             return false;
         }
 
-        public Boolean UpdateInfo(Staff staff)
+        public bool UpdateInfo(Staff staff)
         {
             bool flag = true;
 
@@ -128,8 +134,5 @@ namespace Unilever.DAO
 
             return flag;
         }
-
-
-
     }
 }
