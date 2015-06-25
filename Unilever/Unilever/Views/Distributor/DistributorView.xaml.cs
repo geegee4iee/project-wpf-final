@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Unilever.Views.Distributor
 {
     /// <summary>
-    /// Interaction logic for Distributor.xaml
+    /// Interaction logic for DistributorView.xaml
     /// </summary>
-    public partial class Distributor : Window
+    public partial class DistributorView : Window
     {
-        public Distributor()
+        public DistributorView()
         {
             InitializeComponent();
         }

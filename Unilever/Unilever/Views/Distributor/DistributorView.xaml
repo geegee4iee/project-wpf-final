@@ -1,7 +1,7 @@
-﻿<Window x:Class="Unilever.Views.Distributor.Distributor"
+﻿<Window x:Class="Unilever.Views.Distributor.DistributorView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Distributor" Height="300" Width="300">
+        Title="DistributorView" Height="300" Width="300">
     <Grid>
         
     </Grid>
