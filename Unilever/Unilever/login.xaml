@@ -1,0 +1,21 @@
+﻿<dxr:DXRibbonWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    x:Class="Unilever.login"
+    Title="login" Height="258" Width="360"
+    >
+
+    <Grid>
+        <Label Content="Tài khoản" HorizontalAlignment="Left" Margin="28,81,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="27" Margin="89,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="236" VerticalContentAlignment="Center"/>
+        <Label Content="Mật khẩu" HorizontalAlignment="Left" Margin="28,123,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnLogin" Content="Đăng nhập" HorizontalAlignment="Left" Margin="136,177,0,0" VerticalAlignment="Top" Width="78" Background="#FFB6D2F0" Height="28" Click="btnLogin_Click"/>
+        <Label Content="Đăng nhập tài khoản" HorizontalAlignment="Left" Margin="101,18,0,0" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="18"/>
+
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="89,123,0,0" VerticalAlignment="Top" Width="236" Height="28" VerticalContentAlignment="Center"/>
+
+    </Grid>
+</dxr:DXRibbonWindow>

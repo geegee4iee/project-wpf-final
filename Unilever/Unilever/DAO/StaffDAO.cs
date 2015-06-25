@@ -20,6 +20,7 @@ namespace Unilever.DAO
         {
             using (UnileverEntities entity = new UnileverEntities())
             {
+                staff.Password = MD5Encrypt.Encrypt(staff.Password);
                 entity.Staffs.Add(staff);
                 entity.SaveChanges();
 
@@ -73,7 +74,7 @@ namespace Unilever.DAO
             using (UnileverEntities entity = new UnileverEntities())
             {
                 String encryptedPwd = MD5Encrypt.Encrypt(password);
-                if (entity.Staffs.Where(c => c.Username.Equals(username) && c.Password.Equals(password)).Any())
+                if (entity.Staffs.Where(c => c.Username.Equals(username) && c.Password.Equals(encryptedPwd)).Any())
                 {
                     return true;
                 }
