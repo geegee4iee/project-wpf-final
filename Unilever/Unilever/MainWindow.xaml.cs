@@ -27,28 +27,7 @@ namespace Unilever
             InitializeComponent();
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            pnDanhSach.Closed = false;
-            pnAddStaff.Closed = true;
-            StaffDAO sd = new StaffDAO();
-            gridListStaff.ItemsSource = sd.GetAll().Select(s => new { s.Name, s.Username, s.Email, s.Address }).ToList();
-        }
-
-        private void btnViewDist_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            pnAddStaff.Closed = true;
-            pnDanhSach.Closed = false;
-            DistributorDAO dd = new DistributorDAO();
-            gridListStaff.ItemsSource = dd.GetAll().Select(d => new { d.Name, d.Address, d.Email, d.Phone, d.TimeLimit });
-        }
-
-        private void btnAddStaff_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            pnDanhSach.Closed = true;
-            pnUpdateStaff.Closed = true;
-            pnAddStaff.Closed = false;
-        }
+        
 
         private void btnAddMainStaff_Click(object sender, RoutedEventArgs e)
         {
@@ -84,5 +63,6 @@ namespace Unilever
             txtPassword.Password= string.Empty;
             cbxPermission.SelectedIndex = -1;
         }
+
     }
 }
