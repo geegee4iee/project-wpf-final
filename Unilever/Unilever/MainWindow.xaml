@@ -77,7 +77,7 @@
                 <dxdo:DockLayoutManager>
                     <dxdo:LayoutGroup>
                         <dxdo:DocumentGroup x:Name="documentGroup1" SelectedTabIndex="1" DestroyOnClosingChildren="False" MDIStyle="Tabbed">
-                            <dxdo:DocumentPanel Caption="Nhân viên" x:Name="pnStaff" Content="{dxdo:RelativeUri UriString=Views\\Staff\\Staff.xaml}" />
+                            <dxdo:DocumentPanel Caption="Nhân viên" x:Name="pnStaff" Content="{dxdo:RelativeUri UriString=Views\\Staff\\StaffView.xaml}" />
                             <dxdo:DocumentPanel Caption="Thêm" Name="pnAddStaff">
                                 <Grid RenderTransformOrigin="0.446,0.29">
 
@@ -126,7 +126,7 @@
                                 </Grid>
                             </dxdo:DocumentPanel>
 
-                            <dxdo:DocumentPanel Caption="Test" x:Name="pnTest" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Distributor\\Distributor.xaml}" />
+                            <dxdo:DocumentPanel Caption="Test" x:Name="pnTest" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Distributor\\DistributorView.xaml}" />
 
 
                         </dxdo:DocumentGroup>
