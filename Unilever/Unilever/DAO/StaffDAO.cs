@@ -95,7 +95,7 @@ namespace Unilever.DAO
                     staffData.Name = staff.Name;
                     staffData.Address = staff.Address;
                     staffData.Email = staff.Email;
-
+                    staffData.Permission = staff.Permission;
                     entity.SaveChanges();
                 }
                 else

@@ -78,55 +78,10 @@
                     <dxdo:LayoutGroup>
                         <dxdo:DocumentGroup x:Name="documentGroup1" SelectedTabIndex="1" DestroyOnClosingChildren="False" MDIStyle="Tabbed">
                             <dxdo:DocumentPanel Caption="Nhân viên" x:Name="pnStaff" Content="{dxdo:RelativeUri UriString=Views\\Staff\\StaffView.xaml}" />
-                            <dxdo:DocumentPanel Caption="Thêm" Name="pnAddStaff">
-                                <Grid RenderTransformOrigin="0.446,0.29">
+                        
 
-                                    <TextBox x:Name="txtFullName" HorizontalAlignment="Left" Height="23" Margin="121,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="THÊM NHÂN VIÊN" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Times New Roman"/>
-                                    <Label Content="Họ tên" HorizontalAlignment="Left" Margin="64,61,0,0" VerticalAlignment="Top"/>
-                                    <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="23" Margin="121,102,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Địa chỉ" HorizontalAlignment="Left" Margin="63,103,0,0" VerticalAlignment="Top"/>
-                                    <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="23" Margin="121,144,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="68,145,0,0" VerticalAlignment="Top"/>
-                                    <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="23" Margin="352,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Tên đăng nhập" HorizontalAlignment="Left" Margin="267,59,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="Mật khẩu" HorizontalAlignment="Left" Margin="294,102,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="Phân quyền" HorizontalAlignment="Left" Margin="283,144,0,0" VerticalAlignment="Top"/>
-                                    <ComboBox Name="cbxPermission" HorizontalAlignment="Left" Margin="352,144,0,0" VerticalAlignment="Top" Width="120">
-                                        <ComboBoxItem Content="Nhân viên" />
-                                        <ComboBoxItem Content="Admin" />
-                                    </ComboBox>
-                                    <Button Name="btnAddMainStaff" Content="Thêm" HorizontalAlignment="Left" Margin="163,203,0,0" VerticalAlignment="Top" Width="81" Height="40" Click="btnAddMainStaff_Click"/>
-                                    <Button Name="btnCancelAddStaff" Content="Nhập lại" HorizontalAlignment="Left" Margin="294,203,0,0" VerticalAlignment="Top" Width="81" Height="40" Click="btnCancelAddStaff_Click"/>
-                                    <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="352,102,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
-
-                                </Grid>
-                            </dxdo:DocumentPanel>
-                            <dxdo:DocumentPanel Caption="Sửa" Name="pnUpdateStaff">
-                                <Grid RenderTransformOrigin="0.446,0.29">
-                                    <TextBox HorizontalAlignment="Left" Height="23" Margin="121,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="CHỈNH SỬA NHÂN VIÊN" HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Times New Roman"/>
-                                    <Label Content="Họ tên" HorizontalAlignment="Left" Margin="64,61,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Height="23" Margin="121,102,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Địa chỉ" HorizontalAlignment="Left" Margin="63,103,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Height="23" Margin="121,144,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="68,145,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Height="23" Margin="352,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Tên đăng nhập" HorizontalAlignment="Left" Margin="267,59,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Height="23" Margin="352,101,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                                    <Label Content="Mật khẩu" HorizontalAlignment="Left" Margin="294,102,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="Phân quyền" HorizontalAlignment="Left" Margin="283,144,0,0" VerticalAlignment="Top"/>
-                                    <ComboBox HorizontalAlignment="Left" Margin="352,144,0,0" VerticalAlignment="Top" Width="120">
-                                        <ComboBoxItem Content="Admin" />
-                                        <ComboBoxItem Content="Nhân viên" />
-                                    </ComboBox>
-                                    <Button Content="Chỉnh sửa" HorizontalAlignment="Left" Margin="163,203,0,0" VerticalAlignment="Top" Width="81" Height="40"/>
-                                    <Button Content="Hủy" HorizontalAlignment="Left" Margin="294,203,0,0" VerticalAlignment="Top" Width="81" Height="40"/>
-
-                                </Grid>
-                            </dxdo:DocumentPanel>
-
-                            <dxdo:DocumentPanel Caption="Test" x:Name="pnTest" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Distributor\\DistributorView.xaml}" />
+                            <dxdo:DocumentPanel Caption="Nhà Phân phối" x:Name="pnTest" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Distributor\\DistributorView.xaml}" />
+                            <dxdo:DocumentPanel Caption="Hóa đơn" x:Name="pnOrder" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Orders\\OrderView.xaml}" />
 
 
                         </dxdo:DocumentGroup>
