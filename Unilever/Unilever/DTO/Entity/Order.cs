@@ -16,8 +16,8 @@ namespace Unilever.DTO.Entity
     {
         public Order()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
             this.PaymentDetails = new HashSet<PaymentDetail>();
+            this.OrderDetails = new HashSet<OrderDetail>();
         }
     
         public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace Unilever.DTO.Entity
         public Nullable<int> DistributorId { get; set; }
     
         public virtual Distributor Distributor { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

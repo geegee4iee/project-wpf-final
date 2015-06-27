@@ -30,7 +30,6 @@ namespace Unilever.DTO.Entity
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<FixedRegister> FixedRegisters { get; set; }
         public virtual DbSet<InterestOfYear> InterestOfYears { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -38,5 +37,7 @@ namespace Unilever.DTO.Entity
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }
