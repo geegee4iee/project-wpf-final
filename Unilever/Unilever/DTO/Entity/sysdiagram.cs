@@ -12,15 +12,12 @@ namespace Unilever.DTO.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class sysdiagram
     {
-        public int OrderId { get; set; }
-        public int ProId { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-    
-        public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

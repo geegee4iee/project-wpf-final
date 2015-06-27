@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3d2703c0cf2b49e6835bb8c491eca847" Name="Diagram1">
+      <Diagram DiagramId="3d2703c0cf2b49e6835bb8c491eca847" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="UnileverModel.Category" Width="1.5" PointX="3.75" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Debt" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Distributor" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.FixedRegister" Width="1.5" PointX="8.25" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.InterestOfYear" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnileverModel.OrderDetail" Width="1.5" PointX="7.5" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Order" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.PaymentDetail" Width="1.5" PointX="7.5" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Product" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
@@ -26,11 +25,13 @@
         <AssociationConnector Association="UnileverModel.FK_Sales_Distributors" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Stocks_Distributors" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_FixedRegisters_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="UnileverModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="UnileverModel.FK_OrderDetails_Products" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_PaymentDetails_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Sales_Products" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Stocks_Products" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="UnileverModel.sysdiagram" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="UnileverModel.OrderDetail" Width="1.5" PointX="11.25" PointY="9.125" />
+        <AssociationConnector Association="UnileverModel.FK_OrderDetails_Orders" />
+        <AssociationConnector Association="UnileverModel.FK_OrderDetails_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

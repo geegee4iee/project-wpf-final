@@ -38,7 +38,7 @@ namespace Unilever.Views.Staff
                 MessageBox.Show("Xóa không thành công.");
             }
             grdStaff.ItemsSource = new StaffDAO().GetAll();
-            
+
         }
 
         private void grdStaff_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -54,10 +54,9 @@ namespace Unilever.Views.Staff
         private void grdStaff_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = grdStaff.SelectedItem as Unilever.DTO.Entity.Staff;
-            txtFullName.Text = item.Name;
-            txtAddress.Text = item.Address;
-            txtEmail.Text = item.Email;
-            cbxPermission.SelectedIndex = item.Permission.Value;
+            ChangeInput(item);
+            btnUpdateMainStaff.Visibility = Visibility.Visible;
+            btnUpdateUser.Visibility = Visibility.Visible;
         }
 
         private void LayoutGroup_Loaded(object sender, RoutedEventArgs e)
@@ -80,12 +79,13 @@ namespace Unilever.Views.Staff
             StaffDAO sd = new StaffDAO();
             DTO.Entity.Staff staff = new DTO.Entity.Staff
             {
+                Id = Convert.ToInt32(txtId.Text),
                 Name = txtFullName.Text,
                 Address = txtAddress.Text,
                 Email = txtEmail.Text,
                 Permission = cbxPermission.SelectedIndex
             };
-            if(new StaffDAO().UpdateInfo(staff))
+            if (new StaffDAO().UpdateInfo(staff))
             {
                 grdStaff.ItemsSource = new StaffDAO().GetAll();
                 MessageBox.Show("Cập nhật thông tin cá nhân thành công!!!");
@@ -95,6 +95,30 @@ namespace Unilever.Views.Staff
                 MessageBox.Show("Cập nhật thông tin cá nhân không thành công!!!");
             }
 
+        }
+
+        private void btnStaffRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            DTO.Entity.Staff staff = new DTO.Entity.Staff();
+            ChangeInput(staff);
+            btnUpdateMainStaff.Visibility = Visibility.Hidden;
+            btnUpdateUser.Visibility = Visibility.Hidden;
+            btnStaffAdd.Visibility = Visibility.Visible;
+        }
+
+        private void ChangeInput(DTO.Entity.Staff staff)
+        {
+            txtId.Text = staff.Id.ToString();
+            txtFullName.Text = staff.Name;
+            txtEmail.Text = staff.Email;
+            txtAddress.Text = staff.Address;
+
+            if (staff.Permission.HasValue == false)
+                cbxPermission.SelectedIndex = -1;
+            else
+                cbxPermission.SelectedIndex = staff.Permission.Value;
+
+            txtUsername.Text = staff.Username;
         }
 
 
