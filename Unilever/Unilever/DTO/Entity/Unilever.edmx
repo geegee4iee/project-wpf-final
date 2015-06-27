@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="UnileverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UnileverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,6 +81,7 @@
           <Property Name="Remainder" Type="money" />
           <Property Name="Payment" Type="money" />
           <Property Name="DistributorId" Type="int" />
+          <Property Name="IsFixed" Type="int" />
         </EntityType>
         <EntityType Name="PaymentDetails">
           <Key>
@@ -150,16 +151,6 @@
           <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_Debt_Distributors">
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="1" />
@@ -331,7 +322,6 @@
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staffs" EntityType="Self.Staffs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Debt_Distributors" Association="Self.FK_Debt_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="Debt" EntitySet="Debt" />
@@ -467,6 +457,7 @@
           <NavigationProperty Name="Distributor" Relationship="Self.FK_Orders_Distributors" FromRole="Orders" ToRole="Distributors" />
           <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetails_Orders" FromRole="Orders" ToRole="PaymentDetails" />
           <NavigationProperty Name="OrderDetails" Relationship="UnileverModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <Property Name="IsFixed" Type="Int32" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -737,7 +728,6 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Stocks" EntitySet="Stocks" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="UnileverModel.sysdiagram" />
           <EntitySet Name="OrderDetails" EntityType="UnileverModel.OrderDetail" />
           <AssociationSet Name="FK_OrderDetails_Orders" Association="UnileverModel.FK_OrderDetails_Orders">
             <End Role="Order" EntitySet="Orders" />
@@ -748,16 +738,6 @@
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="OrderId" />
@@ -862,6 +842,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="UnileverModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsFixed" ColumnName="IsFixed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
@@ -936,17 +917,6 @@
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="UnileverModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

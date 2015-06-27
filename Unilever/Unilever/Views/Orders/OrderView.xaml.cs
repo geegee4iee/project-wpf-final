@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Unilever.DAO;
+using Unilever.DTO.Entity;
 
 namespace Unilever.Views.Orders
 {
@@ -22,6 +24,107 @@ namespace Unilever.Views.Orders
         public OrderView()
         {
             InitializeComponent();
+            grdOrderDetails.ItemsSource = lstOrderDetails;
         }
+
+        static List<Unilever.DTO.Entity.OrderDetail> lstOrderDetails = new List<DTO.Entity.OrderDetail>();
+
+        private void btnOrdDeAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var orderDetails = new Unilever.DTO.Entity.OrderDetail();
+            var proc = cbxProduct.SelectedItemValue as DTO.Entity.Product;
+            orderDetails.Product = proc;
+            orderDetails.ProId = proc.Id;
+
+            orderDetails.Quantity = int.Parse(txtQuantity.Text);
+            UpdatePriceOrderDetail(orderDetails, proc.Price.Value);
+            if (lstOrderDetails.Where(c => c.Product.Name.Equals(proc.Name)).Any())
+            {
+                var orderDtemp = lstOrderDetails.Where(c => c.Product.Name.Equals(proc.Name)).FirstOrDefault();
+                orderDtemp.Quantity += int.Parse(txtQuantity.Text);
+                UpdatePriceOrderDetail(orderDtemp, proc.Price.Value);
+            }
+            else
+            {
+                lstOrderDetails.Add(orderDetails);
+            }
+
+            RefreshGridOrderDetails();
+        }
+
+        private static void UpdatePriceOrderDetail(DTO.Entity.OrderDetail orderDetails, decimal price)
+        {
+            orderDetails.Price = price;
+            orderDetails.Amount = price * orderDetails.Quantity;
+        }
+
+        private void grdOrderDetails_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tblOrderDetail.ShowEditor();
+        }
+
+        private void removeOrderDetail_Click(object sender, RoutedEventArgs e)
+        {
+            DTO.Entity.OrderDetail ord = grdOrderDetails.SelectedItem as DTO.Entity.OrderDetail;
+            lstOrderDetails.Remove(ord);
+
+            RefreshGridOrderDetails();
+        }
+
+        private void RefreshGridOrderDetails()
+        {
+            grdOrderDetails.ItemsSource = null;
+            grdOrderDetails.ItemsSource = lstOrderDetails;
+            txtOrdTotal_Update();
+        }
+
+        private void RefreshGridOrders()
+        {
+            
+            grdOrders.ItemsSource = new OrderDAO().GetAll();
+        }
+
+        private void txtOrdTotal_Update()
+        {
+            decimal total = 0;
+            foreach (var ordDel in lstOrderDetails)
+            {
+                total += ordDel.Amount.Value;
+            }
+
+            txtOrdTotal.Text = total.ToString();
+        }
+
+        private void btnOrdAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Order ord = new Order();
+            ord.IsFixed = 0;
+
+            if (txtOrdDateOfIssue.Text.Equals(""))
+            {
+                ord.DateOfIssue = DateTime.Now;
+            }
+            else
+            {
+                ord.DateOfIssue = Convert.ToDateTime(txtOrdDateOfIssue.Text);
+            }
+
+            ord.Total = decimal.Parse(txtOrdTotal.Text);
+            ord.Payment = decimal.Parse(txtPayment.Text);
+            ord.Remainder = ord.Total - ord.Payment;
+            ord.DistributorId = (cbxDistributor.SelectedItem as DTO.Entity.Distributor).Id;
+
+            new OrderDAO().Add(ord, lstOrderDetails);
+
+            lstOrderDetails = new List<OrderDetail>();
+            cbxProduct.SelectedIndex = 0;
+            txtPayment.Text = "";
+            txtOrdDateOfIssue.Text = "";
+
+            RefreshGridOrderDetails();
+            RefreshGridOrders();
+        }
+
+
     }
 }

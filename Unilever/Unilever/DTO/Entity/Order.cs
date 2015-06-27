@@ -26,6 +26,7 @@ namespace Unilever.DTO.Entity
         public Nullable<decimal> Remainder { get; set; }
         public Nullable<decimal> Payment { get; set; }
         public Nullable<int> DistributorId { get; set; }
+        public Nullable<int> IsFixed { get; set; }
     
         public virtual Distributor Distributor { get; set; }
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
