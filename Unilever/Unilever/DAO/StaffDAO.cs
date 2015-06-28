@@ -107,7 +107,7 @@ namespace Unilever.DAO
             return flag;
         }
 
-        public bool UpdatePassword(int id, String oldPwd, String newPwd)
+        public bool UpdatePassword(String userName, String oldPwd, String newPwd)
         {
             String encNewPwd = MD5Encrypt.Encrypt(newPwd);
             String encOldPwd = MD5Encrypt.Encrypt(oldPwd);
@@ -115,17 +115,11 @@ namespace Unilever.DAO
 
             using (UnileverEntities entity = new UnileverEntities())
             {
-                var acc = entity.Staffs.Where(c => c.Id == id).FirstOrDefault();
+                var acc = entity.Staffs.Where(c => c.Username == userName && c.Password == encOldPwd).FirstOrDefault();
                 if (acc != null)
                 {
-                    if (acc.Password.Equals(encOldPwd) == false)
-                    {
-                        flag = false;
-                    }
-                    else
-                    {
-                        acc.Password = encNewPwd;
-                    }
+                    acc.Password = encNewPwd;
+                    entity.SaveChanges();
                 }
                 else
                 {
