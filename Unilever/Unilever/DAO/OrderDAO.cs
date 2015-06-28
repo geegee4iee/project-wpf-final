@@ -57,6 +57,7 @@ namespace Unilever.DAO
                 };
                 ent.Orders.Add(tempOrd);
                 ent.SaveChanges();
+
                 foreach (OrderDetail ordD in lstOrdD)
                 {
                     OrderDetail tempOrdD = new OrderDetail
@@ -72,6 +73,63 @@ namespace Unilever.DAO
                     proc.Quantity -= tempOrdD.Quantity;
                     ent.SaveChanges();
                 }
+
+                PaymentDetail paym = new PaymentDetail
+                {
+                    OrderId = tempOrd.Id,
+                    PayDate = tempOrd.DateOfIssue.Value,
+                    Paid = tempOrd.Payment,
+                    Remainder = tempOrd.Remainder
+                };
+
+                ent.PaymentDetails.Add(paym);
+                ent.SaveChanges();
+            }
+        }
+
+        public void UpdateRemainder(int ordId, decimal payment)
+        {
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var ord = ent.Orders.Where(c => c.Id == ordId).FirstOrDefault();
+                ent.SaveChanges();
+            }
+        }
+
+        public decimal GetCurrentRemainder(int ordId)
+        {
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                decimal remainder;
+                decimal interest = 0;
+                var curDate = DateTime.Now;
+                int curYear = curDate.Year;
+                var curInterest = ent.InterestOfYears.Where(c => c.Id == curYear).FirstOrDefault();
+                var lastPaid = ent.PaymentDetails.Where(c => c.OrderId == ordId).OrderByDescending(c => c.PayDate).FirstOrDefault();
+                var ord = ent.Orders.Where(c => c.Id == ordId).FirstOrDefault();
+                var dis = ord.Distributor;
+                var initDate = ord.DateOfIssue;
+
+                if (curInterest != null)
+                {
+                    interest = curInterest.Interest.Value / 365;
+                }
+
+                var lastPaidDate = lastPaid.PayDate;
+                int days = curDate.Subtract(lastPaidDate).Days;
+
+                if ((curDate.Subtract(initDate.Value)).Days > dis.TimeLimit)
+                {
+                    remainder = lastPaid.Remainder.Value + (days * interest * lastPaid.Remainder.Value);
+                }
+                else
+                {
+                    remainder = lastPaid.Remainder.Value;
+                }
+
+
+
+                return remainder;
             }
         }
 

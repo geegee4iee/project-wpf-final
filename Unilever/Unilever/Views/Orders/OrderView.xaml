@@ -105,7 +105,7 @@
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutGroup Orientation="Vertical">
                     <dxdo:LayoutPanel Caption="Danh sách hóa đơn" ItemWidth="1.28*" ItemHeight="1.21*">
-                        <dxg:GridControl x:Name="grdOrders" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}" SelectionMode="Row" MouseRightButtonDown="grdOrders_MouseRightButtonDown">
+                        <dxg:GridControl x:Name="grdOrders" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}" SelectionMode="Row" MouseRightButtonDown="grdOrders_MouseRightButtonDown" MouseLeftButtonDown="grdOrders_MouseLeftButtonDown">
                             <dxg:GridControl.Columns>
                                 <dxg:GridColumn FieldName="Id" IsSmart="True" Header="Mã"/>
                                 <dxg:GridColumn FieldName="DateOfIssue" IsSmart="True" Header="Ngày lập"/>
@@ -126,8 +126,35 @@
                         </dxg:GridControl>
                     </dxdo:LayoutPanel>
                     <dxdo:LayoutGroup>
-                        <dxdo:LayoutPanel Caption="Thanh toán tiền" ItemHeight="0.79*"/>
-                        <dxdo:LayoutPanel Caption="Chi tiết hóa đơn"/>
+                        <dxdo:LayoutPanel Caption="Thanh toán tiền" ItemHeight="0.79*">
+                            <dxlc:LayoutControl Header="Header" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
+                                <dxlc:LayoutGroup  Orientation="Vertical" >
+                                    <dxlc:LayoutItem Label="Mã hóa đơn :">
+                                        <dxe:TextEdit x:Name="txtOrdPayId" IsEnabled="False"  />
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem Label="Số tiền phải trả :">
+                                        <dxe:TextEdit x:Name="txtOrdPayRemainder" IsEnabled="False" />
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutGroup  Orientation="Vertical" Header="Số tiền muốn thanh toán" View="GroupBox"  >
+                                    <dxlc:LayoutItem Label="Mã hóa đơn :">
+                                        <dxe:TextEdit Mask="d" MaskType="Numeric"  />
+                                    </dxlc:LayoutItem>
+                                    <Button Content="Thanh toán" Height="30" Width="100" HorizontalAlignment="Center"/>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutControl>
+                        </dxdo:LayoutPanel>
+                        <dxdo:LayoutPanel Caption="Chi tiết hóa đơn">
+                            <dxg:GridControl x:Name="grdOrderDetailsView" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" SelectionMode="None">
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn FieldName="Product.Name" Header="Sản phẩm" IsSmart="True"/>
+                                    <dxg:GridColumn FieldName="Quantity" Header="Số lượng" IsSmart="True"/>
+                                </dxg:GridControl.Columns>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowEditing="False"/>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </dxdo:LayoutPanel>
                     </dxdo:LayoutGroup>
                 </dxdo:LayoutGroup>
             </dxdo:LayoutGroup>

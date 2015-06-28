@@ -154,6 +154,14 @@ namespace Unilever.Views.Orders
             }
         }
 
+        private void grdOrders_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var ord = grdOrders.SelectedItem as Order;
+            grdOrderDetailsView.ItemsSource = new OrderDetailDAO().GetAll(ord.Id);
+            txtOrdPayId.Text = ord.Id.ToString();
+            txtOrdPayRemainder.Text = new OrderDAO().GetCurrentRemainder(ord.Id).ToString();
+        }
+
 
     }
 }
