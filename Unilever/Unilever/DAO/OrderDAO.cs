@@ -42,7 +42,7 @@ namespace Unilever.DAO
             return ord;
         }
 
-        public void Add(Order ord,List<OrderDetail> lstOrdD)
+        public void Add(Order ord, List<OrderDetail> lstOrdD)
         {
             using (UnileverEntities ent = new UnileverEntities())
             {
@@ -59,7 +59,8 @@ namespace Unilever.DAO
                 ent.SaveChanges();
                 foreach (OrderDetail ordD in lstOrdD)
                 {
-                    OrderDetail tempOrdD = new OrderDetail{
+                    OrderDetail tempOrdD = new OrderDetail
+                    {
                         OrderId = tempOrd.Id,
                         Price = ordD.Price,
                         ProId = ordD.ProId,
@@ -67,8 +68,27 @@ namespace Unilever.DAO
                         Amount = ordD.Amount
                     };
                     ent.OrderDetails.Add(tempOrdD);
+                    Product proc = ent.Products.Where(c => c.Id == tempOrdD.ProId).FirstOrDefault();
+                    proc.Quantity -= tempOrdD.Quantity;
                     ent.SaveChanges();
-                } 
+                }
+            }
+        }
+
+        public void Remove(int ordId)
+        {
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var ord = ent.Orders.Where(o => o.Id == ordId).FirstOrDefault();
+                var lstOrdD = ord.OrderDetails.ToList();
+
+                foreach (OrderDetail ordD in lstOrdD)
+                {
+                    ent.OrderDetails.Remove(ordD);
+                }
+
+                ent.Orders.Remove(ord);
+                ent.SaveChanges();
             }
         }
     }

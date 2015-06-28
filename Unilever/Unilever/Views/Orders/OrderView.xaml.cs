@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -80,7 +81,7 @@ namespace Unilever.Views.Orders
 
         private void RefreshGridOrders()
         {
-            
+
             grdOrders.ItemsSource = new OrderDAO().GetAll();
         }
 
@@ -97,6 +98,14 @@ namespace Unilever.Views.Orders
 
         private void btnOrdAdd_Click(object sender, RoutedEventArgs e)
         {
+            int quantity = (cbxProduct.SelectedItem as DTO.Entity.Product).Quantity.Value;
+
+            if (quantity < int.Parse(txtQuantity.Text))
+            {
+                MessageBox.Show("Vượt quá số lượng hiện có");
+                return;
+            }
+
             Order ord = new Order();
             ord.IsFixed = 0;
 
@@ -123,6 +132,26 @@ namespace Unilever.Views.Orders
 
             RefreshGridOrderDetails();
             RefreshGridOrders();
+        }
+
+        private void grdOrders_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            tblOrder.ShowEditor();
+        }
+
+        private void removeOrder_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = DXMessageBox.Show("Bạn có chắc chắn muốn xóa đơn hàng?", "Xóa dữ liệu", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                Order ord = grdOrders.SelectedItem as Order;
+                new OrderDAO().Remove(ord.Id);
+                RefreshGridOrders();
+            }
+            else
+            {
+            }
         }
 
 
