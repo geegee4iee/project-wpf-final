@@ -57,10 +57,15 @@ namespace Unilever.Views.Staff
             ChangeInput(item);
             btnUpdateMainStaff.Visibility = Visibility.Visible;
             btnUpdateUser.Visibility = Visibility.Visible;
+            liNewPassword.Visibility = Visibility.Visible;
         }
 
         private void LayoutGroup_Loaded(object sender, RoutedEventArgs e)
         {
+            btnUpdateMainStaff.Visibility = Visibility.Hidden;
+            btnUpdateUser.Visibility = Visibility.Hidden;
+            liNewPassword.Visibility = Visibility.Hidden;
+            btnStaffAdd.Visibility = Visibility.Visible;
         }
 
         private void btnAddStaff_Click(object sender, RoutedEventArgs e)
@@ -95,6 +100,7 @@ namespace Unilever.Views.Staff
                 MessageBox.Show("Cập nhật thông tin cá nhân không thành công!!!");
             }
 
+            
         }
 
         private void btnStaffRefresh_Click(object sender, RoutedEventArgs e)
@@ -104,6 +110,9 @@ namespace Unilever.Views.Staff
             btnUpdateMainStaff.Visibility = Visibility.Hidden;
             btnUpdateUser.Visibility = Visibility.Hidden;
             btnStaffAdd.Visibility = Visibility.Visible;
+            liNewPassword.Visibility = Visibility.Hidden;
+            txtPassword.Text = string.Empty;
+            txtNewPassword.Text = string.Empty;
         }
 
         private void ChangeInput(DTO.Entity.Staff staff)
@@ -114,11 +123,50 @@ namespace Unilever.Views.Staff
             txtAddress.Text = staff.Address;
 
             if (staff.Permission.HasValue == false)
-                cbxPermission.SelectedIndex = -1;
+                cbxPermission.SelectedIndex = -1; 
             else
                 cbxPermission.SelectedIndex = staff.Permission.Value;
 
             txtUsername.Text = staff.Username;
+        }
+
+        private void btnUpdateUser_Click(object sender, RoutedEventArgs e)
+        {
+            StaffDAO sd = new StaffDAO();
+            if(sd.UpdatePassword(txtUsername.Text, txtPassword.Password, txtNewPassword.Password))
+            {
+                MessageBox.Show("Cập nhật mật khẩu thành công");
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật mật khẩu không thành công");
+            }
+            txtPassword.Text = string.Empty;
+            txtNewPassword.Text = string.Empty;
+        }
+
+        private void btnStaffAdd_Click(object sender, RoutedEventArgs e)
+        {
+            StaffDAO sd = new StaffDAO();
+            DTO.Entity.Staff staff = new DTO.Entity.Staff
+            {
+                Name = txtFullName.Text,
+                Address = txtAddress.Text,
+                Email = txtEmail.Text,
+                Permission = cbxPermission.SelectedIndex,
+                Username = txtUsername.Text,
+                Password = txtPassword.Password
+            };
+            if (new StaffDAO().Add(staff))
+            {
+                grdStaff.ItemsSource = new StaffDAO().GetAll();
+                MessageBox.Show("Thêm người dùng thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Thêm người dùng không thành công!!!");
+            }
+
         }
 
 

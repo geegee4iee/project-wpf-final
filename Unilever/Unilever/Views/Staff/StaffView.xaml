@@ -20,7 +20,7 @@
                         <dxlc:LayoutControl Header="Header" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                             <dxlc:LayoutGroup Header="Thông tin cá nhân" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                                 <dxlc:LayoutItem Label="Mã">
-                                    <dxe:TextEdit x:Name="txtId"/>
+                                    <dxe:TextEdit x:Name="txtId" IsReadOnly="true"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="Họ tên">
                                     <dxe:TextEdit x:Name="txtFullName" />
@@ -47,7 +47,10 @@
                                 <dxlc:LayoutItem Label="Password">
                                     <dxe:PasswordBoxEdit x:Name="txtPassword"/>
                                 </dxlc:LayoutItem>
-                                <Button x:Name="btnUpdateUser" Content="Lưu" HorizontalAlignment="Left" Margin="109,0,0,0" Width="81" Height="40"  />
+                                <dxlc:LayoutItem Label="New password" x:Name="liNewPassword">
+                                    <dxe:PasswordBoxEdit x:Name="txtNewPassword"/>
+                                </dxlc:LayoutItem>
+                                <Button x:Name="btnUpdateUser" Content="Lưu" HorizontalAlignment="Left" Margin="109,0,0,0" Width="81" Height="40" Click="btnUpdateUser_Click"  />
                             </dxlc:LayoutGroup>
                             <Grid Height="30">
                                 <Grid.ColumnDefinitions>
@@ -55,7 +58,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="btnStaffAdd" Content="Thêm" Grid.Column="0" />
+                                <Button x:Name="btnStaffAdd" Content="Thêm" Grid.Column="0" Click="btnStaffAdd_Click" />
                                 <Button x:Name="btnDisUpdate" Content="Sửa" Grid.Column="1" Visibility="Hidden"/>
                                 <Button x:Name="btnStaffRefresh" Content="Làm mới" Grid.Column="2" Click="btnStaffRefresh_Click"/>
                             </Grid>
