@@ -84,6 +84,7 @@
                             <dxdo:DocumentPanel Caption="Hóa đơn" x:Name="pnOrder" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Orders\\OrderView.xaml}" />
                             <dxdo:DocumentPanel Caption="Sản phẩm" x:Name="pnProduct" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Products\\ProductView.xaml}" />
                             <dxdo:DocumentPanel Caption="Lãi suất" x:Name="pnInterestOfYear" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\InterestOfYears\\InterestView.xaml}" />
+                            <dxdo:DocumentPanel Caption="Đăng kí cố định" x:Name="pFixedRegister" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\FixedRegisters\\FixedRegisterView.xaml}" />
                         </dxdo:DocumentGroup>
                     </dxdo:LayoutGroup>
                 </dxdo:DockLayoutManager>
