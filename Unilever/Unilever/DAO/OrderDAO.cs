@@ -139,10 +139,16 @@ namespace Unilever.DAO
             {
                 var ord = ent.Orders.Where(o => o.Id == ordId).FirstOrDefault();
                 var lstOrdD = ord.OrderDetails.ToList();
+                var lstPayM = ord.PaymentDetails.ToList();
 
                 foreach (OrderDetail ordD in lstOrdD)
                 {
                     ent.OrderDetails.Remove(ordD);
+                }
+
+                foreach (PaymentDetail payM in lstPayM)
+                {
+                    ent.PaymentDetails.Remove(payM);
                 }
 
                 ent.Orders.Remove(ord);

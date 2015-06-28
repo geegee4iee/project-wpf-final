@@ -14,6 +14,11 @@ namespace Unilever.DAO
             using (UnileverEntities ent = new UnileverEntities())
             {
                 ent.PaymentDetails.Add(pay);
+
+                var ord = ent.Orders.Where(c => c.Id == pay.OrderId).FirstOrDefault();
+                ord.Remainder = pay.Remainder;
+                ord.Payment = pay.Paid;
+
                 ent.SaveChanges();
             }
         }

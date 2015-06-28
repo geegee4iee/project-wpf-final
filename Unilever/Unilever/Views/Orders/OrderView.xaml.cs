@@ -162,6 +162,33 @@ namespace Unilever.Views.Orders
             txtOrdPayRemainder.Text = new OrderDAO().GetCurrentRemainder(ord.Id).ToString();
         }
 
+        private void btnPay_Click(object sender, RoutedEventArgs e)
+        {
+            decimal pay = decimal.Parse(txtPay.Text);
+            decimal remain = decimal.Parse(txtOrdPayRemainder.Text);
+
+            if (pay > remain)
+            {
+                DXMessageBox.Show("Vượt quá số tiền còn lại");
+            }
+            else
+            {
+                PaymentDetail payment = new PaymentDetail
+                {
+                    OrderId = int.Parse(txtOrdPayId.Text),
+                    Paid = pay,
+                    Remainder = remain - pay,
+                    PayDate = DateTime.Now
+                };
+
+                new PaymentDetailDAO().Add(payment);
+                RefreshGridOrders();
+                txtOrdPayId.Text = "";
+                txtOrdPayRemainder.Text = "";
+                txtPay.Text = "";
+            }
+        }
+
 
     }
 }

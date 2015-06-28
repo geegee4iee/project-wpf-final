@@ -137,10 +137,10 @@
                                     </dxlc:LayoutItem>
                                 </dxlc:LayoutGroup>
                                 <dxlc:LayoutGroup  Orientation="Vertical" Header="Số tiền muốn thanh toán" View="GroupBox"  >
-                                    <dxlc:LayoutItem Label="Mã hóa đơn :">
-                                        <dxe:TextEdit Mask="d" MaskType="Numeric"  />
+                                    <dxlc:LayoutItem Label="Trả :">
+                                        <dxe:TextEdit x:Name="txtPay" Mask="c" MaskType="Numeric"  />
                                     </dxlc:LayoutItem>
-                                    <Button Content="Thanh toán" Height="30" Width="100" HorizontalAlignment="Center"/>
+                                    <Button x:Name="btnPay" Content="Thanh toán" Height="30" Width="100" HorizontalAlignment="Center" Click="btnPay_Click"/>
                                 </dxlc:LayoutGroup>
                             </dxlc:LayoutControl>
                         </dxdo:LayoutPanel>
