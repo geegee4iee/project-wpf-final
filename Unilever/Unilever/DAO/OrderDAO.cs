@@ -116,7 +116,17 @@ namespace Unilever.DAO
                 }
 
                 var lastPaidDate = lastPaid.PayDate;
-                int days = curDate.Subtract(lastPaidDate).Days;
+                int days;
+                var limitDate = initDate.Value.AddDays(dis.TimeLimit.Value);
+
+                if (lastPaidDate <= limitDate)
+                {
+                    days = curDate.Subtract(limitDate).Days;
+                }
+                else
+                {
+                    days = curDate.Subtract(lastPaidDate).Days;
+                }
 
                 if ((curDate.Subtract(initDate.Value)).Days > dis.TimeLimit)
                 {
@@ -129,7 +139,7 @@ namespace Unilever.DAO
 
 
 
-                return remainder;
+                return decimal.Round(remainder);
             }
         }
 
