@@ -14,12 +14,11 @@ namespace Unilever.DTO.Entity
     
     public partial class OrderDetail
     {
-        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int ProId { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Amount { get; set; }
-        public Nullable<int> ProId { get; set; }
-        public Nullable<int> OrderId { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

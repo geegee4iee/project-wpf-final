@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UnileverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UnileverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -62,14 +62,14 @@
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ProId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Price" Type="money" />
           <Property Name="Amount" Type="money" />
-          <Property Name="ProId" Type="int" />
-          <Property Name="OrderId" Type="int" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -81,6 +81,7 @@
           <Property Name="Remainder" Type="money" />
           <Property Name="Payment" Type="money" />
           <Property Name="DistributorId" Type="int" />
+          <Property Name="IsFixed" Type="int" />
         </EntityType>
         <EntityType Name="PaymentDetails">
           <Key>
@@ -200,7 +201,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -212,7 +213,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetails_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -374,8 +375,7 @@
             <End Role="Stocks" EntitySet="Stocks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UnileverModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -444,19 +444,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Interest" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProId" Type="Int32" />
-          <Property Name="OrderId" Type="Int32" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
-        </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
@@ -468,8 +455,9 @@
           <Property Name="Payment" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DistributorId" Type="Int32" />
           <NavigationProperty Name="Distributor" Relationship="Self.FK_Orders_Distributors" FromRole="Orders" ToRole="Distributors" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
           <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetails_Orders" FromRole="Orders" ToRole="PaymentDetails" />
+          <NavigationProperty Name="OrderDetails" Relationship="UnileverModel.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <Property Name="IsFixed" Type="Int32" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -495,9 +483,9 @@
           <Property Name="CatId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="FixedRegisters" Relationship="Self.FK_FixedRegisters_Products" FromRole="Products" ToRole="FixedRegisters" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Products" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK_Stocks_Products" FromRole="Products" ToRole="Stocks" />
+          <NavigationProperty Name="OrderDetails" Relationship="UnileverModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
@@ -647,30 +635,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetails_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="ProId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PaymentDetails_Orders">
           <End Role="Orders" Type="Self.Order" Multiplicity="1" />
           <End Role="PaymentDetails" Type="Self.PaymentDetail" Multiplicity="*" />
@@ -713,7 +677,6 @@
           <EntitySet Name="Distributors" EntityType="Self.Distributor" />
           <EntitySet Name="FixedRegisters" EntityType="Self.FixedRegister" />
           <EntitySet Name="InterestOfYears" EntityType="Self.InterestOfYear" />
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetail" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -753,14 +716,6 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="FixedRegisters" EntitySet="FixedRegisters" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_PaymentDetails_Orders" Association="Self.FK_PaymentDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="PaymentDetails" EntitySet="PaymentDetails" />
@@ -773,7 +728,53 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Stocks" EntitySet="Stocks" />
           </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="UnileverModel.OrderDetail" />
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="UnileverModel.FK_OrderDetails_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="UnileverModel.FK_OrderDetails_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="UnileverModel.FK_OrderDetails_Orders" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="UnileverModel.FK_OrderDetails_Products" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="UnileverModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="UnileverModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Type="UnileverModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="UnileverModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -838,21 +839,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="UnileverModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ProId" ColumnName="ProId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="UnileverModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsFixed" ColumnName="IsFixed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
@@ -927,6 +917,17 @@
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="UnileverModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
