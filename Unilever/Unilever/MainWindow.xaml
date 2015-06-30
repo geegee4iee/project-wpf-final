@@ -78,8 +78,6 @@
                     <dxdo:LayoutGroup>
                         <dxdo:DocumentGroup x:Name="documentGroup1" SelectedTabIndex="1" DestroyOnClosingChildren="False" MDIStyle="Tabbed">
                             <dxdo:DocumentPanel Caption="Nhân viên" x:Name="pnStaff" Content="{dxdo:RelativeUri UriString=Views\\Staff\\StaffView.xaml}" />
-                        
-
                             <dxdo:DocumentPanel Caption="Nhà Phân phối" x:Name="pnTest" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Distributor\\DistributorView.xaml}" />
                             <dxdo:DocumentPanel Caption="Hóa đơn" x:Name="pnOrder" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Orders\\OrderView.xaml}" />
                             <dxdo:DocumentPanel Caption="Sản phẩm" x:Name="pnProduct" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Products\\ProductView.xaml}" />
@@ -87,6 +85,7 @@
                             <dxdo:DocumentPanel Caption="Đăng kí cố định" x:Name="pFixedRegister" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\FixedRegisters\\FixedRegisterView.xaml}" />
                             <dxdo:DocumentPanel Caption="Loại sản phẩm" x:Name="pnCategory" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Categories\\CategoryView.xaml}" />
                             <dxdo:DocumentPanel Caption="Import Excel" x:Name="pnImportExcel" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\ImportExcel\\ImportView.xaml}" />
+                            <dxdo:DocumentPanel Caption="Báo cáo doanh số bán hàng" x:Name="pnSalesReport" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\CrystalReport\\CrystalReportView.xaml}" />
                         </dxdo:DocumentGroup>
                     </dxdo:LayoutGroup>
                 </dxdo:DockLayoutManager>
