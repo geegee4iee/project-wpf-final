@@ -20,6 +20,7 @@ namespace Unilever.DTO.Entity
             this.Sales = new HashSet<Sale>();
             this.Stocks = new HashSet<Stock>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.GeneralSales = new HashSet<GeneralSale>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,6 @@ namespace Unilever.DTO.Entity
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<Stock> Stocks { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<GeneralSale> GeneralSales { get; set; }
     }
 }

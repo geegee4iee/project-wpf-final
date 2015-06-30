@@ -53,6 +53,18 @@
           <Property Name="DistributorId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
+        <EntityType Name="GeneralSales">
+          <Key>
+            <PropertyRef Name="ProId" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Month" />
+          </Key>
+          <Property Name="ProId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
         <EntityType Name="InterestOfYears">
           <Key>
             <PropertyRef Name="Id" />
@@ -200,6 +212,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GeneralSales_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="GeneralSales" Type="Self.GeneralSales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GeneralSales">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -313,6 +337,7 @@
           <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FixedRegisters" EntityType="Self.FixedRegisters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeneralSales" EntityType="Self.GeneralSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InterestOfYears" EntityType="Self.InterestOfYears" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -337,6 +362,10 @@
           <AssociationSet Name="FK_FixedRegisters_Products" Association="Self.FK_FixedRegisters_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="FixedRegisters" EntitySet="FixedRegisters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralSales_Products" Association="Self.FK_GeneralSales_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="GeneralSales" EntitySet="GeneralSales" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -486,6 +515,7 @@
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Products" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK_Stocks_Products" FromRole="Products" ToRole="Stocks" />
           <NavigationProperty Name="OrderDetails" Relationship="UnileverModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="GeneralSales" Relationship="UnileverModel.FK_GeneralSales_Products" FromRole="Product" ToRole="GeneralSale" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
@@ -737,6 +767,11 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
+          <EntitySet Name="GeneralSales" EntityType="UnileverModel.GeneralSale" />
+          <AssociationSet Name="FK_GeneralSales_Products" Association="UnileverModel.FK_GeneralSales_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="GeneralSale" EntitySet="GeneralSales" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="OrderDetail">
           <Key>
@@ -771,6 +806,31 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GeneralSale">
+          <Key>
+            <PropertyRef Name="ProId" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Month" />
+          </Key>
+          <Property Name="ProId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="UnileverModel.FK_GeneralSales_Products" FromRole="GeneralSale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_GeneralSales_Products">
+          <End Type="UnileverModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="UnileverModel.GeneralSale" Role="GeneralSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GeneralSale">
               <PropertyRef Name="ProId" />
             </Dependent>
           </ReferentialConstraint>
@@ -928,6 +988,17 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProId" ColumnName="ProId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralSales">
+            <EntityTypeMapping TypeName="UnileverModel.GeneralSale">
+              <MappingFragment StoreEntitySet="GeneralSales">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

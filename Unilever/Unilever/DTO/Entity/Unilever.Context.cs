@@ -38,5 +38,6 @@ namespace Unilever.DTO.Entity
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<GeneralSale> GeneralSales { get; set; }
     }
 }

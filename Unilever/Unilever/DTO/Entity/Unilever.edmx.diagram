@@ -31,6 +31,8 @@
         <EntityTypeShape EntityType="UnileverModel.OrderDetail" Width="1.5" PointX="11.25" PointY="9.125" />
         <AssociationConnector Association="UnileverModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="UnileverModel.FK_OrderDetails_Products" />
+        <EntityTypeShape EntityType="UnileverModel.GeneralSale" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="UnileverModel.FK_GeneralSales_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
