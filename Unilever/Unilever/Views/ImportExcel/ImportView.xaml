@@ -8,12 +8,25 @@
         <dxdo:DockLayoutManager>
             <dxdo:LayoutGroup>
                 <dxdo:LayoutGroup Orientation="Vertical" ItemWidth="0.68*">
-                    <dxdo:LayoutPanel Caption="Panel1">
-                        <dxlc:LayoutControl Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
-                            <dxlc:LayoutGroup Header="Thông tin" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
+                    <dxdo:LayoutPanel Caption="Import Excel">
+                        <dxlc:LayoutControl x:Name="lcImportView" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox" Loaded="lcImportView_Loaded">
+                            <dxlc:LayoutGroup Header="Nhà phân phối" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
+                                <dxlc:LayoutItem Label="Chọn">
+                                    <dxe:ComboBoxEdit x:Name="cbxContributor" />
+                                </dxlc:LayoutItem>
+
+                            </dxlc:LayoutGroup>    
+                            <dxlc:LayoutGroup Header="Doanh số bán hàng" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
 
                                 <dxlc:LayoutItem Label="Chọn file">
                                     <Button Width="80" Content="..." x:Name="btnSelectFile" Click="btnSelectFile_Click"/>
+                                </dxlc:LayoutItem>
+
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Header="Hàng tồn kho" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
+
+                                <dxlc:LayoutItem Label="Chọn file">
+                                    <Button Width="80" Content="..." x:Name="btnSelectFileStock" Click="btnSelectFile_Click"/>
                                 </dxlc:LayoutItem>
 
                             </dxlc:LayoutGroup>
