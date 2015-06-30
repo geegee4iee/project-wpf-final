@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="UnileverModel.PaymentDetail" Width="1.5" PointX="7.5" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Product" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Province" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnileverModel.Sale" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Staff" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UnileverModel.Stock" Width="1.5" PointX="10.25" PointY="13.25" IsExpanded="true" />
         <AssociationConnector Association="UnileverModel.FK_Products_Categories" ManuallyRouted="false" />
@@ -22,17 +21,18 @@
         <AssociationConnector Association="UnileverModel.FK_Distributors_Provinces" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_FixedRegisters_Distributors" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Orders_Distributors" ManuallyRouted="false" />
-        <AssociationConnector Association="UnileverModel.FK_Sales_Distributors" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Stocks_Distributors" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_FixedRegisters_Products" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_PaymentDetails_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="UnileverModel.FK_Sales_Products" ManuallyRouted="false" />
         <AssociationConnector Association="UnileverModel.FK_Stocks_Products" ManuallyRouted="false" />
         <EntityTypeShape EntityType="UnileverModel.OrderDetail" Width="1.5" PointX="11.25" PointY="9.125" />
         <AssociationConnector Association="UnileverModel.FK_OrderDetails_Orders" />
         <AssociationConnector Association="UnileverModel.FK_OrderDetails_Products" />
         <EntityTypeShape EntityType="UnileverModel.GeneralSale" Width="1.5" PointX="8.375" PointY="0.75" />
         <AssociationConnector Association="UnileverModel.FK_GeneralSales_Products" />
+        <EntityTypeShape EntityType="UnileverModel.Sale" Width="1.5" PointX="8.25" PointY="6.625" />
+        <AssociationConnector Association="UnileverModel.FK_Sales_Distributors" />
+        <AssociationConnector Association="UnileverModel.FK_Sales_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

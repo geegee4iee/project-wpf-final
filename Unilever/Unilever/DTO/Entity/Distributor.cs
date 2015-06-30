@@ -19,8 +19,8 @@ namespace Unilever.DTO.Entity
             this.Debts = new HashSet<Debt>();
             this.FixedRegisters = new HashSet<FixedRegister>();
             this.Orders = new HashSet<Order>();
-            this.Sales = new HashSet<Sale>();
             this.Stocks = new HashSet<Stock>();
+            this.Sales = new HashSet<Sale>();
         }
     
         public int Id { get; set; }
@@ -35,7 +35,7 @@ namespace Unilever.DTO.Entity
         public virtual Province Province { get; set; }
         public virtual ICollection<FixedRegister> FixedRegisters { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<Stock> Stocks { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }
