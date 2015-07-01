@@ -53,6 +53,18 @@
           <Property Name="DistributorId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
+        <EntityType Name="GeneralSales">
+          <Key>
+            <PropertyRef Name="ProId" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Month" />
+          </Key>
+          <Property Name="ProId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
         <EntityType Name="InterestOfYears">
           <Key>
             <PropertyRef Name="Id" />
@@ -121,8 +133,8 @@
           </Key>
           <Property Name="DistributorId" Type="int" Nullable="false" />
           <Property Name="ProId" Type="int" Nullable="false" />
-          <Property Name="Year" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Month" Type="date" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Price" Type="int" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Sales" Type="money" />
@@ -196,6 +208,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FixedRegisters">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeneralSales_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="GeneralSales" Type="Self.GeneralSales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GeneralSales">
               <PropertyRef Name="ProId" />
             </Dependent>
           </ReferentialConstraint>
@@ -313,6 +337,7 @@
           <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FixedRegisters" EntityType="Self.FixedRegisters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeneralSales" EntityType="Self.GeneralSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InterestOfYears" EntityType="Self.InterestOfYears" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -337,6 +362,10 @@
           <AssociationSet Name="FK_FixedRegisters_Products" Association="Self.FK_FixedRegisters_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="FixedRegisters" EntitySet="FixedRegisters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralSales_Products" Association="Self.FK_GeneralSales_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="GeneralSales" EntitySet="GeneralSales" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -423,8 +452,8 @@
           <NavigationProperty Name="Province" Relationship="Self.FK_Distributors_Provinces" FromRole="Distributors" ToRole="Provinces" />
           <NavigationProperty Name="FixedRegisters" Relationship="Self.FK_FixedRegisters_Distributors" FromRole="Distributors" ToRole="FixedRegisters" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Distributors" FromRole="Distributors" ToRole="Orders" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Distributors" FromRole="Distributors" ToRole="Sales" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK_Stocks_Distributors" FromRole="Distributors" ToRole="Stocks" />
+          <NavigationProperty Name="Sales" Relationship="UnileverModel.FK_Sales_Distributors" FromRole="Distributor" ToRole="Sale" />
         </EntityType>
         <EntityType Name="FixedRegister">
           <Key>
@@ -483,9 +512,10 @@
           <Property Name="CatId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="FixedRegisters" Relationship="Self.FK_FixedRegisters_Products" FromRole="Products" ToRole="FixedRegisters" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Products" FromRole="Products" ToRole="Sales" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK_Stocks_Products" FromRole="Products" ToRole="Stocks" />
           <NavigationProperty Name="OrderDetails" Relationship="UnileverModel.FK_OrderDetails_Products" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="GeneralSales" Relationship="UnileverModel.FK_GeneralSales_Products" FromRole="Product" ToRole="GeneralSale" />
+          <NavigationProperty Name="Sales" Relationship="UnileverModel.FK_Sales_Products" FromRole="Product" ToRole="Sale" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
@@ -494,23 +524,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Distributors" Relationship="Self.FK_Distributors_Provinces" FromRole="Provinces" ToRole="Distributors" />
-        </EntityType>
-        <EntityType Name="Sale">
-          <Key>
-            <PropertyRef Name="DistributorId" />
-            <PropertyRef Name="ProId" />
-            <PropertyRef Name="Year" />
-            <PropertyRef Name="Month" />
-          </Key>
-          <Property Name="DistributorId" Type="Int32" Nullable="false" />
-          <Property Name="ProId" Type="Int32" Nullable="false" />
-          <Property Name="Year" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Month" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Price" Type="Int32" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Sales" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Distributor" Relationship="Self.FK_Sales_Distributors" FromRole="Sales" ToRole="Distributors" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Sales_Products" FromRole="Sales" ToRole="Products" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -599,18 +612,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sales_Distributors">
-          <End Role="Distributors" Type="Self.Distributor" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Distributors">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sales">
-              <PropertyRef Name="DistributorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Stocks_Distributors">
           <End Role="Distributors" Type="Self.Distributor" Multiplicity="1" />
           <End Role="Stocks" Type="Self.Stock" Multiplicity="*" />
@@ -647,18 +648,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sales_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sales">
-              <PropertyRef Name="ProId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Stocks_Products">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="Stocks" Type="Self.Stock" Multiplicity="*" />
@@ -681,7 +670,6 @@
           <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetail" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Provinces" EntityType="Self.Province" />
-          <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
           <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
@@ -704,10 +692,6 @@
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sales_Distributors" Association="Self.FK_Sales_Distributors">
-            <End Role="Distributors" EntitySet="Distributors" />
-            <End Role="Sales" EntitySet="Sales" />
-          </AssociationSet>
           <AssociationSet Name="FK_Stocks_Distributors" Association="Self.FK_Stocks_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="Stocks" EntitySet="Stocks" />
@@ -719,10 +703,6 @@
           <AssociationSet Name="FK_PaymentDetails_Orders" Association="Self.FK_PaymentDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="PaymentDetails" EntitySet="PaymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sales_Products" Association="Self.FK_Sales_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
           <AssociationSet Name="FK_Stocks_Products" Association="Self.FK_Stocks_Products">
             <End Role="Products" EntitySet="Products" />
@@ -736,6 +716,20 @@
           <AssociationSet Name="FK_OrderDetails_Products" Association="UnileverModel.FK_OrderDetails_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="GeneralSales" EntityType="UnileverModel.GeneralSale" />
+          <AssociationSet Name="FK_GeneralSales_Products" Association="UnileverModel.FK_GeneralSales_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="GeneralSale" EntitySet="GeneralSales" />
+          </AssociationSet>
+          <EntitySet Name="Sales" EntityType="UnileverModel.Sale" />
+          <AssociationSet Name="FK_Sales_Distributors" Association="UnileverModel.FK_Sales_Distributors">
+            <End Role="Distributor" EntitySet="Distributors" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Products" Association="UnileverModel.FK_Sales_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="OrderDetail">
@@ -771,6 +765,72 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GeneralSale">
+          <Key>
+            <PropertyRef Name="ProId" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Month" />
+          </Key>
+          <Property Name="ProId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="UnileverModel.FK_GeneralSales_Products" FromRole="GeneralSale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_GeneralSales_Products">
+          <End Type="UnileverModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="UnileverModel.GeneralSale" Role="GeneralSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GeneralSale">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="DistributorId" />
+            <PropertyRef Name="ProId" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Month" />
+          </Key>
+          <Property Name="DistributorId" Type="Int32" Nullable="false" />
+          <Property Name="ProId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Sales" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Distributor" Relationship="UnileverModel.FK_Sales_Distributors" FromRole="Sale" ToRole="Distributor" />
+          <NavigationProperty Name="Product" Relationship="UnileverModel.FK_Sales_Products" FromRole="Sale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Sales_Distributors">
+          <End Type="UnileverModel.Distributor" Role="Distributor" Multiplicity="1" />
+          <End Type="UnileverModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distributor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DistributorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Products">
+          <End Type="UnileverModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="UnileverModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
               <PropertyRef Name="ProId" />
             </Dependent>
           </ReferentialConstraint>
@@ -883,19 +943,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="UnileverModel.Sale">
-              <MappingFragment StoreEntitySet="Sales">
-                <ScalarProperty Name="DistributorId" ColumnName="DistributorId" />
-                <ScalarProperty Name="ProId" ColumnName="ProId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Sales" ColumnName="Sales" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="UnileverModel.Staff">
               <MappingFragment StoreEntitySet="Staffs">
@@ -928,6 +975,30 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProId" ColumnName="ProId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralSales">
+            <EntityTypeMapping TypeName="UnileverModel.GeneralSale">
+              <MappingFragment StoreEntitySet="GeneralSales">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="UnileverModel.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="DistributorId" ColumnName="DistributorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

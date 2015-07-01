@@ -26,6 +26,10 @@ namespace Unilever.Views.Orders
         {
             InitializeComponent();
             grdOrderDetails.ItemsSource = lstOrderDetails;
+            if (new FixedRegisterDAO().AddOrder() == true)
+            {
+                grdOrders.ItemsSource = new OrderDAO().GetAll();
+            }
         }
 
         static List<Unilever.DTO.Entity.OrderDetail> lstOrderDetails = new List<DTO.Entity.OrderDetail>();

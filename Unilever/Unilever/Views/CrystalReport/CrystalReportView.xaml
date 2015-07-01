@@ -1,0 +1,11 @@
+﻿<Window x:Class="Unilever.Views.CrystalReport.CrystalReportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer"
+        Title="CrystalReportView" Height="300" Width="300" Loaded="Window_Loaded">
+    <Grid>
+        <my:CrystalReportsViewer HorizontalAlignment="Left" x:Name="crystalReportsViewer1"
+                                 VerticalAlignment="Top" />
+        <Button x:Name="btnHello" Content="Hello" Width="100" Height="30" VerticalAlignment="Bottom" Click="btnHello_Click"></Button>
+    </Grid>
+</Window>
