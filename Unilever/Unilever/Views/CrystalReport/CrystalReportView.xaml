@@ -13,7 +13,7 @@
                         <dxlc:LayoutControl Header="Header" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                             <dxlc:LayoutGroup Header="Xem báo cáo" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                                 <dxlc:LayoutItem Label="Thời gian">
-                                    <dxe:DateEdit x:Name="txtDate" Mask="y">
+                                    <dxe:DateEdit x:Name="txtDate" Mask="y" EditValue="January 2015" DateTime="01/01/2015 00:00:00" MaskUseAsDisplayFormat="True">
                                         <dxe:DateEdit.StyleSettings>
                                             <dxe:DateEditPickerStyleSettings/>
                                         </dxe:DateEdit.StyleSettings>
