@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Unilever.DAO;
+using Unilever.DTO.Entity;
 
 namespace Unilever.Views.Stocks
 {
@@ -48,5 +50,12 @@ namespace Unilever.Views.Stocks
         {
 
         }
+
+        private void grdStock_Loaded(object sender, RoutedEventArgs e)
+        {
+            //grdStock.ItemsSource = new StockDAO().GetAll();
+        }
+
+       
     }
 }
