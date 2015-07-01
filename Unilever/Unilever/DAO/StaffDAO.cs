@@ -16,6 +16,15 @@ namespace Unilever.DAO
             }
         }
 
+        public Staff GetByUsername(string username, string password)
+        {
+            string encPassword = MD5Encrypt.Encrypt(password);
+            using (UnileverEntities entity = new UnileverEntities())
+            {
+                return entity.Staffs.Where(s => s.Username == username && s.Password == encPassword).FirstOrDefault();
+            }
+        }
+
         public bool Add(Staff staff)
         {
             using (UnileverEntities entity = new UnileverEntities())

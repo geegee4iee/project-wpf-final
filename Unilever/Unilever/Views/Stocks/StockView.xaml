@@ -4,7 +4,18 @@
         xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:Entity="clr-namespace:Unilever.DTO.Entity" x:Class="Unilever.Views.Stocks.StockView"
         Title="StockView" Height="435.338" Width="1197.744">
     <Window.Resources>
+
+        <dx:EntitySimpleDataSource x:Key="EntitySimpleDataSource2" ContextType="{x:Type Entity:UnileverEntities}" Path="Products">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:EntitySimpleDataSource>
         <dx:EntitySimpleDataSource x:Key="EntitySimpleDataSource" ContextType="{x:Type Entity:UnileverEntities}" Path="Stocks">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:EntitySimpleDataSource>
+        <dx:EntitySimpleDataSource x:Key="EntitySimpleDataSource3" ContextType="{x:Type Entity:UnileverEntities}" Path="Distributors">
             <dx:DesignDataManager.DesignData>
                 <dx:DesignDataSettings RowCount="5"/>
             </dx:DesignDataManager.DesignData>
@@ -19,7 +30,7 @@
                         <dxlc:LayoutControl x:Name="lcInfoPro" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                             <dxlc:LayoutGroup x:Name="lgInfoStock" Header="Thông tin hàng tồn kho" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox" Loaded="lgInfoStock_Loaded">
                                 <dxlc:LayoutItem Label="Nhà phân phối">
-                                    <dxe:ComboBoxEdit />
+                                    <dxe:ComboBoxEdit ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource3}}" SelectedIndex="0" DisplayMember="Name" ValueMember="Id" />
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="Sản phẩm">
                                     <dxe:ComboBoxEdit />
@@ -37,7 +48,7 @@
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Header="Xem hàng tồn theo nhà phân phối" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
                                 <dxlc:LayoutItem Label="Nhà phân phối">
-                                    <dxe:ComboBoxEdit />
+                                    <dxe:ComboBoxEdit ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource3}}" DisplayMember="Name" ValueMember="Id" SelectedIndex="0" />
                                 </dxlc:LayoutItem>
 
                                 <Button Height="40" Width="120" x:Name="btnViewStockByDist" Content="Xem" Click="btnViewStockByDist_Click" />
@@ -56,18 +67,28 @@
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutPanel Caption="Hàng tồn kho" ItemWidth="1.31*">
-                    <dxg:GridControl AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" SelectionMode="Row" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}">
+                    <dxg:GridControl AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}" SelectionMode="Row">
                         <dxg:GridControl.Columns>
-                            <dxg:GridColumn FieldName="DistributorId" IsSmart="True" Header="Nhà sản xuất"/>
-                            <dxg:GridColumn FieldName="ProId" IsSmart="True" Header="Sản phẩm"/>
-                            <dxg:GridColumn FieldName="Year" IsSmart="True" Header="Năm"/>
-                            <dxg:GridColumn FieldName="Month" IsSmart="True"  Header="Tháng"/>
-                            <dxg:GridColumn FieldName="Quantity" IsSmart="True" Header="Số lượng"/>
+                            <dxg:GridColumn FieldName="DistributorId" IsSmart="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:ComboBoxEditSettings MaskUseAsDisplayFormat="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource3}}" DisplayMember="Name" ValueMember="Id"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="ProId" IsSmart="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:ComboBoxEditSettings MaskUseAsDisplayFormat="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource2}}" DisplayMember="Name" ValueMember="Id"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Year" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="Month" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="Quantity" IsSmart="True"/>
+
                         </dxg:GridControl.Columns>
                         <dxg:GridControl.View>
-                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="True" AutoWidth="True"/>
                         </dxg:GridControl.View>
                     </dxg:GridControl>
+
                 </dxdo:LayoutPanel>
             </dxdo:LayoutGroup>
         </dxdo:DockLayoutManager>
