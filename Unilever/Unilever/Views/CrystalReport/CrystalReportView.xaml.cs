@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using CrystalDecisions.ReportSource;
 using Unilever.DTO.Entity;
 
 namespace Unilever.Views.CrystalReport
@@ -30,22 +31,61 @@ namespace Unilever.Views.CrystalReport
            
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void btnHello_Click(object sender, RoutedEventArgs e)
+        private void crystalReportsViewer1_Loaded(object sender, RoutedEventArgs e)
         {
             ReportDocument report = new ReportDocument();
             report.Load(@"D:\MyGitHub\project-wpf-final\Unilever\Unilever\Views\CrystalReport\SaleReport.rpt");
 
             using (UnileverEntities ent = new UnileverEntities())
             {
-                report.SetDataSource(ent.Sales.ToList());
-            }
+                var lstSale = (from c in ent.Sales
+                               select new
+                               {
+                                   DisId = c.DistributorId,
+                                   DisName = c.Distributor.Name,
+                                   ProId = c.ProId,
+                                   ProName = c.Product.Name,
+                                   c.Year,
+                                   c.Month,
+                                   Quantity = c.Quantity.Value,
+                                   Sales = c.Sales.Value
+                               }).ToList();
 
-            crystalReportsViewer1.ViewerCore.ReportSource = report;
+                report.SetDataSource(lstSale);
+                crystalReportsViewer1.ViewerCore.ReportSource = report;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnOpenReport_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime date = txtDate.DateTime;
+           
+            ReportDocument report = new ReportDocument();
+            report.Load("./Views/CrystalReport/SaleReport.rpt");
+
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var lstSale = (from c in ent.Sales
+                               select new
+                               {
+                                   DisId = c.DistributorId,
+                                   DisName = c.Distributor.Name,
+                                   ProId = c.ProId,
+                                   ProName = c.Product.Name,
+                                   c.Year,
+                                   c.Month,
+                                   Quantity = c.Quantity.Value,
+                                   Sales = c.Sales.Value
+                               }).ToList();
+
+                report.SetDataSource(lstSale);
+                crystalReportsViewer1.ViewerCore.ReportSource = report;
+            }
         }
     }
 }
