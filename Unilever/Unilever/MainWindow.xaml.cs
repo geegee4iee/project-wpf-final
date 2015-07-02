@@ -71,6 +71,8 @@ namespace Unilever
             pnStock.Visibility = Visibility.Collapsed;
             pnTest.Visibility = Visibility.Collapsed;
             pFixedRegister.Visibility = Visibility.Collapsed;
+            pnStockReport.Visibility = Visibility.Collapsed;
+            pnDebtReport.Visibility = Visibility.Collapsed;
         }
 
 
@@ -152,6 +154,18 @@ namespace Unilever
             login log = new login();
             log.Show();
             this.Close();
+        }
+
+        private void btnDebtReport_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CloseAllTab();
+            pnDebtReport.Visibility = Visibility.Visible;
+        }
+
+        private void btnStockReport_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CloseAllTab();
+            pnStockReport.Visibility = Visibility.Visible;
         }
 
 
