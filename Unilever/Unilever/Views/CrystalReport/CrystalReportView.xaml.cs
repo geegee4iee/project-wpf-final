@@ -71,6 +71,7 @@ namespace Unilever.Views.CrystalReport
             using (UnileverEntities ent = new UnileverEntities())
             {
                 var lstSale = (from c in ent.Sales
+                               where c.Month == date.Month && c.Year == date.Year
                                select new
                                {
                                    DisId = c.DistributorId,

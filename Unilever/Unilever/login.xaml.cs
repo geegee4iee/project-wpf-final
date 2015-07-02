@@ -32,9 +32,13 @@ namespace Unilever
 
             if(sd.Login(txtUsername.Text, txtPassword.Password) == true)
             {
-                this.Hide();
+                
                 MainWindow main = new MainWindow();
+                Staff st = new StaffDAO().GetByUsername(txtUsername.Text, txtPassword.Password);
+                main.FullName = st.Name;
+                main.PermissionFlag = st.Permission.Value;
                 main.Show();
+                this.Close();
             }
             else
             {
