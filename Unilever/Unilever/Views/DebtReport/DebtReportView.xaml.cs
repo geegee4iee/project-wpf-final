@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Unilever.DTO.Entity;
 using DevExpress.Xpf.Core;
+using Unilever.DAO;
 
 namespace Unilever.Views.DebtReport
 {
@@ -29,6 +30,8 @@ namespace Unilever.Views.DebtReport
 
         private void btnOpenReport_Click(object sender, RoutedEventArgs e)
         {
+            new DebtDAO().AutoAdd();
+            new DebtDAO().AutoUpdate();
             DateTime date = txtDate.DateTime;
 
             using (UnileverEntities ent = new UnileverEntities())

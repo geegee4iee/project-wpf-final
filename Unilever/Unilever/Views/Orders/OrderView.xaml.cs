@@ -30,6 +30,9 @@ namespace Unilever.Views.Orders
             {
                 grdOrders.ItemsSource = new OrderDAO().GetAll();
             }
+
+            new DebtDAO().AutoAdd();
+            new DebtDAO().AutoUpdate();
         }
 
         static List<Unilever.DTO.Entity.OrderDetail> lstOrderDetails = new List<DTO.Entity.OrderDetail>();

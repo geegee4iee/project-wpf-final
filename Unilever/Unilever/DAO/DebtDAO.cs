@@ -55,6 +55,45 @@ namespace Unilever.DAO
             return success;
         }
 
+        public void Update(int distrId, int year, int month, decimal debtValue)
+        {
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var debt = ent.Debts.Where(c => c.Year == year && c.DistributorId == distrId).FirstOrDefault();
+
+                switch (month)
+                {
+                    case 1: debt.Month1 = debtValue;
+                        break;
+                    case 2: debt.Month2 = debtValue;
+                        break;
+                    case 3: debt.Month3 = debtValue;
+                        break;
+                    case 4: debt.Month4 = debtValue;
+                        break;
+                    case 5: debt.Month5 = debtValue;
+                        break;
+                    case 6: debt.Month6 = debtValue;
+                        break;
+                    case 7: debt.Month7 = debtValue;
+                        break;
+                    case 8: debt.Month8 = debtValue;
+                        break;
+                    case 9: debt.Month9 = debtValue;
+                        break;
+                    case 10: debt.Month10 = debtValue;
+                        break;
+                    case 11: debt.Month11 = debtValue;
+                        break;
+                    case 12: debt.Month12 = debtValue;
+                        break;
+                    default: break;
+                }
+
+                ent.SaveChanges();
+            }
+        }
+
         public decimal GetCurrentDebt(int orderId)
         {
             using (UnileverEntities ent = new UnileverEntities())
@@ -152,6 +191,54 @@ namespace Unilever.DAO
             }
 
             return success;
+        }
+
+        public void AutoAdd()
+        {
+            int curYear = DateTime.Now.Year;
+
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var lstDis = ent.Distributors.ToList();
+                foreach (var dis in lstDis)
+                {
+                    if (!dis.Debts.Where(c => c.Year == curYear).Any())
+                    {
+                        Debt debt = new Debt
+                        {
+                            DistributorId = dis.Id,
+                            Year = curYear
+                        };
+
+                        ent.Debts.Add(debt);
+                    }
+                    else { }
+                }
+
+                ent.SaveChanges();
+            }
+        }
+
+        public void AutoUpdate()
+        {
+            int curMonth = DateTime.Now.Month;
+            int curYear = DateTime.Now.Year;
+
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var lstDis = ent.Distributors.ToList();
+                foreach (var dis in lstDis)
+                {
+                    var lstOrd = dis.Orders.Where(c => c.Remainder != 0).Select(c => c.Id).ToList();
+                    decimal totalDebt = 0;
+                    foreach (var ordId in lstOrd)
+                    {
+                        totalDebt += new OrderDAO().GetCurrentRemainder(ordId);
+                    }
+
+                    Update(dis.Id, curYear, curMonth, totalDebt);
+                }
+            }
         }
     }
 }
