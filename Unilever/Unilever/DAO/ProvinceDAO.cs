@@ -7,42 +7,42 @@ using Unilever.DTO.Entity;
 
 namespace Unilever.DAO
 {
-    class CategoryDAO
+    class ProvinceDAO
     {
-        public List<Category> GetAll()
+        public List<Province> GetAll()
         {
             using (UnileverEntities entity = new UnileverEntities())
             {
-                return entity.Categories.ToList();
+                return entity.Provinces.ToList();
             }
         }
 
-        public bool IsExistedName(Category cat)
+        public bool IsExistedName(Province provine)
         {
             bool flag = true;
 
             using (UnileverEntities ent = new UnileverEntities())
             {
-                var tempCat = ent.Categories.Where(i => i.Name == cat.Name).FirstOrDefault();
-                
-                if(tempCat == null)
+                var tempProvince = ent.Provinces.Where(i => i.ProvinceName == provine.ProvinceName).FirstOrDefault();
+
+                if (tempProvince == null)
                 {
                     flag = false;
                 }
                 else
                 {
-                    
+
                 }
             }
 
             return flag;
         }
 
-        public bool Add(Category cat)
+        public bool Add(Province provine)
         {
             bool flag = true;
 
-            if (IsExistedName(cat) == true)
+            if (IsExistedName(provine) == true)
             {
                 flag = false;
             }
@@ -52,7 +52,7 @@ namespace Unilever.DAO
                 {
                     using (UnileverEntities entity = new UnileverEntities())
                     {
-                        entity.Categories.Add(cat);
+                        entity.Provinces.Add(provine);
                         entity.SaveChanges();
                     }
                 }
@@ -63,7 +63,7 @@ namespace Unilever.DAO
                 }
             }
 
-            return flag;
+            return flag;         
         }
 
         public bool Remove(int id)
@@ -72,12 +72,12 @@ namespace Unilever.DAO
 
             using (UnileverEntities entity = new UnileverEntities())
             {
-                var cat = entity.Categories.Where(c => c.Id == id).FirstOrDefault();
-                if (cat != null)
+                var provine = entity.Provinces.Where(c => c.Id == id).FirstOrDefault();
+                if (provine != null)
                 {
                     try
                     {
-                        entity.Categories.Remove(cat);
+                        entity.Provinces.Remove(provine);
                         entity.SaveChanges();
                     }
                     catch (System.Exception ex)
@@ -95,11 +95,11 @@ namespace Unilever.DAO
             return flag;
         }
 
-        public bool Update(Category cat)
+        public bool Update(Province provine)
         {
             bool flag = true;
 
-            if (IsExistedName(cat) == true)
+            if (IsExistedName(provine) == true)
             {
                 flag = false;
             }
@@ -107,10 +107,10 @@ namespace Unilever.DAO
             {
                 using (UnileverEntities entity = new UnileverEntities())
                 {
-                    var catData = entity.Categories.Where(i => i.Id == cat.Id).FirstOrDefault();
+                    var catData = entity.Provinces.Where(i => i.Id == provine.Id).FirstOrDefault();
                     if (catData != null)
                     {
-                        catData.Name = cat.Name;
+                        catData.ProvinceName = provine.ProvinceName;
                         entity.SaveChanges();
                     }
                     else
@@ -119,7 +119,7 @@ namespace Unilever.DAO
                     }
                 }
             }
-
+            
             return flag;
         }
     }
