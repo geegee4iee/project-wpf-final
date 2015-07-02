@@ -15,6 +15,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using CrystalDecisions.ReportSource;
 using Unilever.DTO.Entity;
+using DevExpress.Xpf.Core;
 
 namespace Unilever.Views.CrystalReport
 {
@@ -64,10 +65,6 @@ namespace Unilever.Views.CrystalReport
         private void btnOpenReport_Click(object sender, RoutedEventArgs e)
         {
             DateTime date = txtDate.DateTime;
-           
-            ReportDocument report = new ReportDocument();
-            report.Load("./Views/CrystalReport/SaleReport.rpt");
-
             using (UnileverEntities ent = new UnileverEntities())
             {
                 var lstSale = (from c in ent.Sales
@@ -84,6 +81,46 @@ namespace Unilever.Views.CrystalReport
                                    Sales = c.Sales.Value
                                }).ToList();
 
+                if (lstSale.Count == 0)
+                {
+                    DXMessageBox.Show("Không có dữ liệu thống kê");
+                    return;
+                }
+
+                ReportDocument report = new ReportDocument();
+                report.Load("./Views/CrystalReport/SaleReport.rpt");
+                report.SetDataSource(lstSale);
+                crystalReportsViewer1.ViewerCore.ReportSource = report;
+            }
+        }
+
+        private void btnOpenReport2_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime date = txtDate2.DateTime;
+            using (UnileverEntities ent = new UnileverEntities())
+            {
+                var lstSale = (from c in ent.Sales
+                               where c.Year == date.Year
+                               select new
+                               {
+                                   DisId = c.DistributorId,
+                                   DisName = c.Distributor.Name,
+                                   ProId = c.ProId,
+                                   ProName = c.Product.Name,
+                                   c.Year,
+                                   c.Month,
+                                   Quantity = c.Quantity.Value,
+                                   Sales = c.Sales.Value
+                               }).ToList();
+
+                if (lstSale.Count == 0)
+                {
+                    DXMessageBox.Show("Không có dữ liệu thống kê");
+                    return;
+                }
+
+                ReportDocument report = new ReportDocument();
+                report.Load("./Views/CrystalReport/SaleReport.rpt");
                 report.SetDataSource(lstSale);
                 crystalReportsViewer1.ViewerCore.ReportSource = report;
             }

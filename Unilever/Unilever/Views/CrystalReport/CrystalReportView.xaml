@@ -21,6 +21,16 @@
                                 </dxlc:LayoutItem>
                                 <Button x:Name="btnOpenReport" Content="Xử lý nội dung" Height="30" Click="btnOpenReport_Click"/>
                             </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Header="Xem báo cáo theo năm" Orientation="Vertical" UseLayoutRounding="True" View="GroupBox">
+                                <dxlc:LayoutItem Label="Thời gian">
+                                    <dxe:DateEdit x:Name="txtDate2" Mask="yyyy" EditValue="2015" DateTime="01/01/2015 00:00:00" MaskUseAsDisplayFormat="True">
+                                        <dxe:DateEdit.StyleSettings>
+                                            <dxe:DateEditPickerStyleSettings/>
+                                        </dxe:DateEdit.StyleSettings>
+                                    </dxe:DateEdit>
+                                </dxlc:LayoutItem>
+                                <Button x:Name="btnOpenReport2" Content="Xử lý nội dung" Height="30" Click="btnOpenReport2_Click"  />
+                            </dxlc:LayoutGroup>
 
                         </dxlc:LayoutControl>
                     </dxdo:LayoutPanel>

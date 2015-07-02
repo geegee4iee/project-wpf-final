@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DebtDataSet" targetNamespace="http://tempuri.org/DebtDataSet.xsd" xmlns:mstns="http://tempuri.org/DebtDataSet.xsd" xmlns="http://tempuri.org/DebtDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DebtDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DebtDataSet" msprop:Generator_UserDSName="DebtDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Year" msprop:Generator_ColumnVarNameInTable="columnYear" msprop:Generator_ColumnPropNameInRow="Year" msprop:Generator_ColumnPropNameInTable="YearColumn" msprop:Generator_UserColumnName="Year" type="xs:int" />
+              <xs:element name="DisId" msprop:Generator_ColumnVarNameInTable="columnDisId" msprop:Generator_ColumnPropNameInRow="DisId" msprop:Generator_ColumnPropNameInTable="DisIdColumn" msprop:Generator_UserColumnName="DisId" type="xs:int" />
+              <xs:element name="DisName" msprop:Generator_ColumnVarNameInTable="columnDisName" msprop:Generator_ColumnPropNameInRow="DisName" msprop:Generator_ColumnPropNameInTable="DisNameColumn" msprop:Generator_UserColumnName="DisName" type="xs:string" minOccurs="0" />
+              <xs:element name="Month1" msprop:Generator_ColumnVarNameInTable="columnMonth1" msprop:Generator_ColumnPropNameInRow="Month1" msprop:Generator_ColumnPropNameInTable="Month1Column" msprop:Generator_UserColumnName="Month1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month2" msprop:Generator_ColumnVarNameInTable="columnMonth2" msprop:Generator_ColumnPropNameInRow="Month2" msprop:Generator_ColumnPropNameInTable="Month2Column" msprop:Generator_UserColumnName="Month2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month3" msprop:Generator_ColumnVarNameInTable="columnMonth3" msprop:Generator_ColumnPropNameInRow="Month3" msprop:Generator_ColumnPropNameInTable="Month3Column" msprop:Generator_UserColumnName="Month3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month4" msprop:Generator_ColumnVarNameInTable="columnMonth4" msprop:Generator_ColumnPropNameInRow="Month4" msprop:Generator_ColumnPropNameInTable="Month4Column" msprop:Generator_UserColumnName="Month4" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month5" msprop:Generator_ColumnVarNameInTable="columnMonth5" msprop:Generator_ColumnPropNameInRow="Month5" msprop:Generator_ColumnPropNameInTable="Month5Column" msprop:Generator_UserColumnName="Month5" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month6" msprop:Generator_ColumnVarNameInTable="columnMonth6" msprop:Generator_ColumnPropNameInRow="Month6" msprop:Generator_ColumnPropNameInTable="Month6Column" msprop:Generator_UserColumnName="Month6" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month7" msprop:Generator_ColumnVarNameInTable="columnMonth7" msprop:Generator_ColumnPropNameInRow="Month7" msprop:Generator_ColumnPropNameInTable="Month7Column" msprop:Generator_UserColumnName="Month7" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month8" msprop:Generator_ColumnVarNameInTable="columnMonth8" msprop:Generator_ColumnPropNameInRow="Month8" msprop:Generator_ColumnPropNameInTable="Month8Column" msprop:Generator_UserColumnName="Month8" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month9" msprop:Generator_ColumnVarNameInTable="columnMonth9" msprop:Generator_ColumnPropNameInRow="Month9" msprop:Generator_ColumnPropNameInTable="Month9Column" msprop:Generator_UserColumnName="Month9" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month10" msprop:Generator_ColumnVarNameInTable="columnMonth10" msprop:Generator_ColumnPropNameInRow="Month10" msprop:Generator_ColumnPropNameInTable="Month10Column" msprop:Generator_UserColumnName="Month10" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month11" msprop:Generator_ColumnVarNameInTable="columnMonth11" msprop:Generator_ColumnPropNameInRow="Month11" msprop:Generator_ColumnPropNameInTable="Month11Column" msprop:Generator_UserColumnName="Month11" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Month12" msprop:Generator_ColumnVarNameInTable="columnMonth12" msprop:Generator_ColumnPropNameInRow="Month12" msprop:Generator_ColumnPropNameInTable="Month12Column" msprop:Generator_UserColumnName="Month12" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DataTable1" />
+      <xs:field xpath="mstns:Year" />
+      <xs:field xpath="mstns:DisId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
