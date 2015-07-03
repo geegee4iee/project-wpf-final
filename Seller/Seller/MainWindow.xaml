@@ -78,7 +78,7 @@
                             <dxdo:DocumentPanel Caption="Import Excel" x:Name="pnImportExcel" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\ImportExcel\\ImportExcelView.xaml}" />
                             <dxdo:DocumentPanel Caption="Export Excel" x:Name="pnExportExcel" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\ExportExcel\\ExportExcelView.xaml}" />
                             
-                            <dxdo:DocumentPanel Caption="Báo cáo doanh số bán hàng" x:Name="pnSalesReport" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\CrystalReport\\CrystalReportView.xaml}" />
+                            <dxdo:DocumentPanel Caption="Báo cáo doanh số bán hàng" x:Name="pnSalesReport" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\SalesReport\\SalesReportView.xaml}" />
                             <dxdo:DocumentPanel Caption="Báo cáo công nợ" x:Name="pnDebtReport" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\DebtReport\\DebtReportView.xaml}" />
                             
 
