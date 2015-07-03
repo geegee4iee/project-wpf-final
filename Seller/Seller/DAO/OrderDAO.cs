@@ -69,6 +69,17 @@ namespace Seller.DAO
                     ent.OrderDetails.Add(tempOrdD);
                     Product proc = ent.Products.Where(c => c.Id == tempOrdD.ProId).FirstOrDefault();
                     proc.Quantity -= tempOrdD.Quantity;
+
+                    GeneralSale sale = new GeneralSale
+                    {
+                        ProId = ordD.ProId,
+                        Amount = ordD.Amount,
+                        Quantity = ordD.Quantity,
+                        Month = DateTime.Now.Month,
+                        Year = DateTime.Now.Year
+                    };
+                    new GeneralSaleDAO().Add(sale);
+
                     ent.SaveChanges();
                 }
 

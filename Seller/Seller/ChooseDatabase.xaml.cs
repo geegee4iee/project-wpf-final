@@ -3,9 +3,9 @@ using System.Windows;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using System.Collections.Specialized;
-using System.Configuration;
 using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Seller
 {

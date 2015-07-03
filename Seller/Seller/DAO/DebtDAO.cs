@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unilever.DTO.Entity;
+using Seller.DTO.Entity;
 
-namespace Unilever.DAO
+namespace Seller.DAO
 {
     class DebtDAO
     {
-        public List<Debt> GetAll(int distributorId)
+        public List<Debt> GetAll(int CusId)
         {
             List<Debt> lst = new List<Debt>();
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                lst = ent.Debts.Where(c => c.DistributorId == distributorId).ToList();
+                lst = ent.Debts.Where(c => c.CusId == CusId).ToList();
             }
 
             return lst;
@@ -25,9 +25,9 @@ namespace Unilever.DAO
         {
             Debt debt = null;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                debt = ent.Debts.Where(c => c.DistributorId == distrId && c.Year == year).FirstOrDefault();
+                debt = ent.Debts.Where(c => c.CusId == distrId && c.Year == year).FirstOrDefault();
             }
 
             return debt;
@@ -37,9 +37,9 @@ namespace Unilever.DAO
         {
             bool success = true;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                Debt curr = ent.Debts.Where(c => c.Year == year && c.DistributorId == distrId).First();
+                Debt curr = ent.Debts.Where(c => c.Year == year && c.CusId == distrId).First();
 
                 if (curr != null)
                 {
@@ -57,9 +57,9 @@ namespace Unilever.DAO
 
         public void Update(int distrId, int year, int month, decimal debtValue)
         {
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                var debt = ent.Debts.Where(c => c.Year == year && c.DistributorId == distrId).FirstOrDefault();
+                var debt = ent.Debts.Where(c => c.Year == year && c.CusId == distrId).FirstOrDefault();
 
                 switch (month)
                 {
@@ -96,7 +96,7 @@ namespace Unilever.DAO
 
         public decimal GetCurrentDebt(int orderId)
         {
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
                 Order ord = ent.Orders.Where(c => c.Id == orderId).FirstOrDefault();
 
@@ -108,9 +108,9 @@ namespace Unilever.DAO
         {
             decimal totalDebt = 0;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                List<Order> lstOrd = ent.Orders.Where(c => c.DistributorId == distrId).ToList();
+                List<Order> lstOrd = ent.Orders.Where(c => c.CusId == distrId).ToList();
 
 
                 foreach (Order ord in lstOrd)
@@ -126,12 +126,12 @@ namespace Unilever.DAO
         {
             Boolean success = true;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                var debt = ent.Debts.Where(c => c.DistributorId == distrId && c.Year == year).First();
+                var debt = ent.Debts.Where(c => c.CusId == distrId && c.Year == year).First();
                 if (debt == null)
                 {
-                    ent.Debts.Add(new Debt { Year = year, DistributorId = distrId });
+                    ent.Debts.Add(new Debt { Year = year, CusId = distrId });
                     ent.SaveChanges();
                 }
                 else
@@ -147,9 +147,9 @@ namespace Unilever.DAO
         {
             Boolean success = true;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                var debt = ent.Debts.Where(c => c.DistributorId == distrId && c.Year == year).First();
+                var debt = ent.Debts.Where(c => c.CusId == distrId && c.Year == year).First();
 
                 if (debt != null)
                 {
@@ -197,16 +197,16 @@ namespace Unilever.DAO
         {
             int curYear = DateTime.Now.Year;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                var lstDis = ent.Distributors.ToList();
+                var lstDis = ent.Customers.ToList();
                 foreach (var dis in lstDis)
                 {
                     if (!dis.Debts.Where(c => c.Year == curYear).Any())
                     {
                         Debt debt = new Debt
                         {
-                            DistributorId = dis.Id,
+                            CusId = dis.Id,
                             Year = curYear
                         };
 
@@ -224,9 +224,9 @@ namespace Unilever.DAO
             int curMonth = DateTime.Now.Month;
             int curYear = DateTime.Now.Year;
 
-            using (UnileverEntities ent = new UnileverEntities())
+            using (SellerEntities ent = new SellerEntities())
             {
-                var lstDis = ent.Distributors.ToList();
+                var lstDis = ent.Customers.ToList();
                 foreach (var dis in lstDis)
                 {
                     var lstOrd = dis.Orders.Where(c => c.Remainder != 0).Select(c => c.Id).ToList();
