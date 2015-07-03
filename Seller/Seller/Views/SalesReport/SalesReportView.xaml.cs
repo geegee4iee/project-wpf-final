@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Seller.Views.CrystalReport
+namespace Seller.Views.SalesReport
 {
     /// <summary>
-    /// Interaction logic for CrystalReportView.xaml
+    /// Interaction logic for SalesReportView.xaml
     /// </summary>
-    public partial class CrystalReportView : Window
+    public partial class SalesReportView : Window
     {
-        public CrystalReportView()
+        public SalesReportView()
         {
             InitializeComponent();
         }
