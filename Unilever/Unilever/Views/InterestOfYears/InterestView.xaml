@@ -54,7 +54,7 @@
                             <dxg:TableView x:Name="contextInterestOfYear" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AutoWidth="True">
                                 <ContextMenuService.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="removeInterestOfYear"  Header="Xóa" Click="removeInterestOfYear_Click"/>
+                                        <MenuItem x:Name="removeInterestOfYear"  Header="Xóa" Click="removeInterestOfYear_Click" Loaded="removeInterestOfYear_Loaded"/>
                                     </ContextMenu>
                                 </ContextMenuService.ContextMenu>
                             </dxg:TableView>

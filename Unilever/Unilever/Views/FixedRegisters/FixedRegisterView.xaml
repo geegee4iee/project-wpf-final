@@ -40,13 +40,13 @@
                                     <dxe:SpinEdit x:Name="txtQuantity" MinValue="1" Mask="d" EditValue="1" Increment="10"/>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
-                            <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Grid Height="30">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="btnRegister" Content="Đăng ký" Height="35"  HorizontalAlignment="Center" Grid.Column="0" Click="btnRegister_Click"></Button>
+                                <Button x:Name="btnRegister" Content="Đăng ký" Grid.Column="0" Click="btnRegister_Click"></Button>
                                 <Button x:Name="btnUpdate" Content="Thay đổi" Grid.Column="1" IsEnabled="False" Click="btnUpdate_Click"  ></Button>
                                 <Button x:Name="btnRefresh" Content="Làm mới"  Grid.Column="2" Click="btnRefresh_Click"></Button>
                             </Grid>
@@ -55,7 +55,7 @@
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutPanel Caption="Danh sách đăng ký cố định" ItemWidth="1.32*">
-                    <dxg:GridControl x:Name="grdFixedRegisters" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}" SelectionMode="Row" MouseLeftButtonDown="grdFixedRegisters_MouseLeftButtonDown" MouseRightButtonDown="grdFixedRegisters_MouseRightButtonDown">
+                    <dxg:GridControl x:Name="grdFixedRegisters" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource}}" SelectionMode="Row" MouseLeftButtonDown="grdFixedRegisters_MouseLeftButtonDown" MouseRightButtonDown="grdFixedRegisters_MouseRightButtonDown" >
                         <dxg:GridControl.Columns>
                             <dxg:GridColumn FieldName="DistributorId" IsSmart="True" Header="Mã nhà phân phối"/>
                             <dxg:GridColumn FieldName="Distributor.Name" IsSmart="True" Header="Tên nhà phân phối"/>
@@ -67,7 +67,7 @@
                             <dxg:TableView x:Name="tblFixedRegister" AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowEditing="False">
                                 <ContextMenuService.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="removeFixedRegister"  Header="Xóa" Click="removeFixedRegister_Click"/>
+                                        <MenuItem x:Name="removeFixedRegister"  Header="Xóa" Click="removeFixedRegister_Click" Loaded="removeFixedRegister_Loaded"/>
                                     </ContextMenu>
                                 </ContextMenuService.ContextMenu>
                             </dxg:TableView>

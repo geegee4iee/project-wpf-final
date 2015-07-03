@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Unilever.DAO;
+using Unilever.DTO.Entity;
 
 namespace Unilever.Views.Provices
 {
@@ -132,5 +133,29 @@ namespace Unilever.Views.Provices
 
             grdProvince.ItemsSource = new ProvinceDAO().GetAll();
         }
+
+        private void removeProvince_Loaded(object sender, RoutedEventArgs e)
+        {
+            Province prov = null;
+            try
+            {
+                prov = grdProvince.SelectedItem as Province;
+            }
+            catch (System.Exception ex)
+            {
+                return;
+            }
+
+            if (prov == null)
+            {
+                removeProvince.IsEnabled = false;
+            }
+            else
+            {
+                removeProvince.IsEnabled = true;
+            }
+        }
+
+
     }
 }
