@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,15 +29,15 @@ namespace Unilever.Views.Products
 
         private void LayoutGroup_Loaded(object sender, RoutedEventArgs e)
         {
-            btnProUpdate.Visibility = Visibility.Hidden;
+            btnProUpdate.IsEnabled = false;
             cbxCategory.ItemsSource = new CategoryDAO().GetAll();
 
         }
 
         private void btnProRefresh_Click(object sender, RoutedEventArgs e)
         {
-            btnProUpdate.Visibility = Visibility.Hidden;
-            btnProAdd.Visibility = Visibility.Visible;
+            btnProUpdate.IsEnabled = false;
+            btnProAdd.IsEnabled = true;
             Product pro = new Product();
             InputChange(pro);
         }
@@ -61,38 +62,132 @@ namespace Unilever.Views.Products
             {
                 cbxCategory.SelectedText = pro.Category.Name;
             }
-            //cbxCategory.DisplayMember = pro.Category.Name;
         }
 
         private void btnProAdd_Click(object sender, RoutedEventArgs e)
         {
-            Product pro = new Product
-            {
-                Name = txtName.Text,
-                Price = Convert.ToDecimal(txtPrice.Text),
-                Quantity = Convert.ToInt32(txtQuantity.Text),
-                Sale = Convert.ToInt32(txtSale.Text),
-                Description = new TextRange(txtDesc.Document.ContentStart, txtDesc.Document.ContentEnd).Text,
-                CatId = (cbxCategory.SelectedItem as Category).Id
-            };
+            Product pro = null;
 
-            if (new ProductDao().Add(pro))
+            string name = txtName.Text;
+            if(string.IsNullOrEmpty(name))
             {
-                MessageBox.Show("Thêm sản phẩm thành công!");
-                grdViewPro.ItemsSource = new ProductDao().GetAll();
+                DXMessageBox.Show("Vui lòng nhập tên sản phẩm!");
+                return;
             }
             else
             {
-                MessageBox.Show("Thêm sản phẩm không thành công!!!");
+
             }
+
+            decimal price = 0;
+            try
+            {
+                price = Convert.ToDecimal(txtPrice.Text);
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                return;
+            }
+
+            Int32 quantity = 0;
+            try
+            {
+                quantity = Convert.ToInt32(txtQuantity.Text);
+                if(quantity < 0)
+                {
+                    DXMessageBox.Show("Vui lòng không nhập số lượng âm!");
+                    return;
+                }
+                else
+                {
+                   
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                return;
+            }
+
+            Int32 sale = 0;
+            try
+            {
+                sale = Convert.ToInt32(txtSale.Text);
+                if (sale < 0)
+                {
+                    DXMessageBox.Show("Vui lòng không nhập số lượng bán âm!");
+                    return;
+                }
+                else
+                {
+                    
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                return;
+            }
+
+            string description = null;
+            try
+            {
+                description = new TextRange(txtDesc.Document.ContentStart, txtDesc.Document.ContentEnd).Text;
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                return;
+            }
+
+            int catId = (cbxCategory.SelectedItem as Category).Id;
+            try
+            {
+                pro = new Product
+                {
+                    Name = name,
+                    Price = price,
+                    Quantity = quantity,
+                    Sale = sale,
+                    Description = description,
+                    CatId = catId
+                };
+
+                if (new ProductDao().Add(pro))
+                {
+                    DXMessageBox.Show("Thêm sản phẩm thành công!");
+                    grdViewPro.ItemsSource = new ProductDao().GetAll();
+                }
+                else
+                {
+                    DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Thêm sản phẩm không thành công!");
+                return;
+            }
+           
         }
 
         private void grdViewPro_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = grdViewPro.SelectedItem as Product;
+            if(item == null)
+            {
+                return;
+            }
+            else
+            {
+
+            }
+
             InputChange(new ProductDao().GetById(item.Id));
-            btnProAdd.Visibility = Visibility.Hidden;
-            btnProUpdate.Visibility = Visibility.Visible;
+
+            btnProAdd.IsEnabled = false;
+            btnProUpdate.IsEnabled = true;
         }
 
         private void grdViewPro_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -106,44 +201,143 @@ namespace Unilever.Views.Products
 
             if (new ProductDao().Remove(item.Id))
             {
-                MessageBox.Show("Xóa dữ liệu thành công! ");
+                DXMessageBox.Show("Xóa dữ liệu thành công! ");
             }
             else
             {
-                MessageBox.Show("Xóa không thành công.");
+                DXMessageBox.Show("Xóa không thành công!");
             }
+
             grdViewPro.ItemsSource = new ProductDao().GetAll();
         }
 
         private void btnProUpdate_Click(object sender, RoutedEventArgs e)
         {
             Product pro = null;
-            try
+
+            string name = txtName.Text;
+            if (string.IsNullOrEmpty(name))
             {
-                pro = new Product
-                           {
-                               Id = Convert.ToInt32(txtId.Text),
-                               Name = txtName.Text,
-                               Price = Convert.ToDecimal(txtPrice.Text),
-                               Quantity = Convert.ToInt32(txtQuantity.Text),
-                               Sale = Convert.ToInt32(txtSale.Text),
-                               Description = new TextRange(txtDesc.Document.ContentStart, txtDesc.Document.ContentEnd).Text,
-                               CatId = (cbxCategory.SelectedItem as Category).Id
-                           };
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("Dữ liệu không hợp lệ, vui lòng kiểm tra lại!!!");
+                DXMessageBox.Show("Vui lòng nhập tên sản phẩm!");
                 return;
-            }
-            if (new ProductDao().UpdateInfo(pro))
-            {
-                MessageBox.Show("Thêm sản phẩm thành công!");
-                grdViewPro.ItemsSource = new ProductDao().GetAll();
             }
             else
             {
-                MessageBox.Show("Thêm sản phẩm không thành công!!!");
+
+            }
+
+            decimal price = 0;
+            try
+            {
+                price = Convert.ToDecimal(txtPrice.Text);
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                return;
+            }
+
+            Int32 quantity = 0;
+            try
+            {
+                quantity = Convert.ToInt32(txtQuantity.Text);
+                if (quantity < 0)
+                {
+                    DXMessageBox.Show("Vui lòng không nhập số lượng âm!");
+                    return;
+                }
+                else
+                {
+
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                return;
+            }
+
+            Int32 sale = 0;
+            try
+            {
+                sale = Convert.ToInt32(txtSale.Text);
+                if (sale < 0)
+                {
+                    DXMessageBox.Show("Vui lòng không nhập số lượng bán âm!");
+                    return;
+                }
+                else
+                {
+
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                return;
+            }
+
+            string description = null;
+            try
+            {
+                description = new TextRange(txtDesc.Document.ContentStart, txtDesc.Document.ContentEnd).Text;
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                return;
+            }
+
+            int catId = (cbxCategory.SelectedItem as Category).Id;
+            try
+            {
+                pro = new Product
+                {
+                    Id = Convert.ToInt32(txtId.Text),
+                    Name = name,
+                    Price = price,
+                    Quantity = quantity,
+                    Sale = sale,
+                    Description = description,
+                    CatId = catId
+                };
+
+                if (new ProductDao().UpdateInfo(pro))
+                {
+                    DXMessageBox.Show("Cập nhật sản phẩm thành công!");
+                    grdViewPro.ItemsSource = new ProductDao().GetAll();
+                }
+                else
+                {
+                    DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                DXMessageBox.Show("Cập nhật sản phẩm không thành công!");
+                return;
+            }
+        }
+
+        private void removePro_Loaded(object sender, RoutedEventArgs e)
+        {
+            Product pro = null;
+            try
+            {
+                pro = grdViewPro.SelectedItem as Product;
+            }
+            catch (System.Exception ex)
+            {
+                return;
+            }
+
+            if (pro == null)
+            {
+                removePro.IsEnabled = false;
+            }
+            else
+            {
+                removePro.IsEnabled = true;
             }
         }
     }

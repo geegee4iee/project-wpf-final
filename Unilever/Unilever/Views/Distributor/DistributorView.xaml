@@ -48,7 +48,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="btnDisAdd" Content="Thêm" Grid.Column="0" Click="btnDisAdd_Click" ></Button>
-                                <Button x:Name="btnDisUpdate" Content="Sửa" Grid.Column="1" Visibility="Hidden" Click="btnDisUpdate_Click"></Button>
+                                <Button x:Name="btnDisUpdate" Content="Cập nhật" Grid.Column="1"  Click="btnDisUpdate_Click"></Button>
                                 <Button x:Name="btnDisRefresh" Content="Làm mới" Grid.Column="2" Click="btnDisRefresh_Click"></Button>
                             </Grid>
                                 
@@ -74,7 +74,7 @@
                             <dxg:TableView x:Name="contextDistributor"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowEditing="False">
                                 <ContextMenuService.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="removeDistributor"  Header="Xóa" Click="removeDistributor_Click"/>
+                                        <MenuItem x:Name="removeDistributor"  Header="Xóa" Click="removeDistributor_Click" Loaded="removeDistributor_Loaded"/>
                                     </ContextMenu>
                                 </ContextMenuService.ContextMenu>
                             </dxg:TableView>

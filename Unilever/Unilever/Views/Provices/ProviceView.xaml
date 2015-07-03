@@ -49,7 +49,7 @@
                             <dxg:TableView x:Name="contextProvince"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AutoWidth="True">
                                 <ContextMenuService.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="removeProvince"  Header="Xóa" Click="removeProvince_Click"/>
+                                        <MenuItem x:Name="removeProvince"  Header="Xóa" Click="removeProvince_Click" Loaded="removeProvince_Loaded"/>
                                     </ContextMenu>
                                 </ContextMenuService.ContextMenu>
                             </dxg:TableView>

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Unilever.DAO;
+using Unilever.DTO.Entity;
 
 namespace Unilever.Views.InterestOfYears
 {
@@ -141,6 +142,28 @@ namespace Unilever.Views.InterestOfYears
             }
             
             cbxYear.ItemsSource = data;
+        }
+
+        private void removeInterestOfYear_Loaded(object sender, RoutedEventArgs e)
+        {
+            InterestOfYear interest = null;
+            try
+            {
+                interest = grdIoy.SelectedItem as InterestOfYear;
+            }
+            catch (System.Exception ex)
+            {
+                return;
+            }
+
+            if (interest == null)
+            {
+                removeInterestOfYear.IsEnabled = false;
+            }
+            else
+            {
+                removeInterestOfYear.IsEnabled = true;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Unilever.DAO;
+using Unilever.DTO.Entity;
 
 namespace Unilever.Views.Categories
 {
@@ -131,6 +132,28 @@ namespace Unilever.Views.Categories
             }
 
             grdCat.ItemsSource = new CategoryDAO().GetAll();
+        }
+
+        private void removeCategory_Loaded(object sender, RoutedEventArgs e)
+        {
+            Category cat = null;
+            try
+            {
+                cat = grdCat.SelectedItem as Category;
+            }
+            catch (System.Exception ex)
+            {
+                return;
+            }
+
+            if (cat == null)
+            {
+                removeCategory.IsEnabled = false;
+            }
+            else
+            {
+                removeCategory.IsEnabled = true;
+            }
         }
     }
 }

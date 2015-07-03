@@ -50,7 +50,7 @@
                             <dxg:TableView x:Name="contextCategory"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AutoWidth="True">
                                 <ContextMenuService.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem x:Name="removeCategory"  Header="Xóa" Click="removeCategory_Click"/>
+                                        <MenuItem x:Name="removeCategory"  Header="Xóa" Click="removeCategory_Click" Loaded="removeCategory_Loaded"/>
                                     </ContextMenu>
                                 </ContextMenuService.ContextMenu>
                             </dxg:TableView>
