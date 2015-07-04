@@ -16,10 +16,10 @@
                         <dxe:TextEdit x:Name="txtServerName" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Database file (*.mdf)">
-                        <dxe:ButtonEdit x:Name="btnDataFileName"/>
+                        <dxe:ButtonEdit x:Name="btnDataFileName" DefaultButtonClick="btnDataFileName_DefaultButtonClick"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Database log file (*.ldf)">
-                        <dxe:ButtonEdit x:Name="btnDataLogFileName"/>
+                        <dxe:ButtonEdit x:Name="btnDataLogFileName" DefaultButtonClick="btnDataLogFileName_DefaultButtonClick" />
                     </dxlc:LayoutItem>
                     <Button x:Name="btnAccess" Content="Lưu" HorizontalAlignment="Center"  Width="81" Height="40" Click="btnAccess_Click" />
                 </dxlc:LayoutGroup>

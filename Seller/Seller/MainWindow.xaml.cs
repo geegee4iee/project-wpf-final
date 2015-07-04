@@ -36,7 +36,6 @@ namespace Seller
             pnOrder.Visibility = Visibility.Collapsed;
             pnProduct.Visibility = Visibility.Collapsed;
             pnCustomer.Visibility = Visibility.Collapsed;
-            pFixedRegister.Visibility = Visibility.Collapsed;
 
             pnImportExcel.Visibility = Visibility.Collapsed;
             pnExportExcel.Visibility = Visibility.Collapsed;
@@ -56,11 +55,7 @@ namespace Seller
 
         }
 
-        private void btnFixedRegister_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            CloseAllTab();
-            pFixedRegister.Visibility = Visibility.Visible;
-        }
+        
 
         private void btnCustomer_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {

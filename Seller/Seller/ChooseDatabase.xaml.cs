@@ -14,6 +14,8 @@ namespace Seller
     /// </summary>
     public partial class ChooseDatabase : Window
     {
+        private static string databaseDataFile;
+        private static string databaseLogFile;
         public ChooseDatabase()
         {
             InitializeComponent();
@@ -77,23 +79,13 @@ namespace Seller
                     DataFile DatabaseDataFile = new DataFile(DatabaseFileGroup, DatabaseName);
                     DatabaseFileGroup.Files.Add(DatabaseDataFile);
 
-
-                    Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
-                    // Prompt the user to enter a path/filename to save an example Excel file to
-                    openFileDialog1.Filter = "Database files (*.mdf)|*.mdf|All files (*.*)|*.*";
-                    openFileDialog1.FilterIndex = 1;
-                    openFileDialog1.RestoreDirectory = true;
-
-                    //  If the user hit Cancel, then abort!
-                    if (openFileDialog1.ShowDialog() != true)
-                        return;
-
-                    DatabaseDataFile.FileName = openFileDialog1.FileName;
+                    DatabaseDataFile.FileName = databaseDataFile;
                     //DatabaseDataFile.FileName = System.AppDomain.CurrentDomain.BaseDirectory + DatabaseName + ".mdf";
 
                     LogFile DatabaseLogFile = new LogFile(NewDatabase, DatabaseName + "_log");
                     NewDatabase.LogFiles.Add(DatabaseLogFile);
 
+                    DatabaseLogFile.FileName = databaseLogFile;
                     //DatabaseLogFile.FileName = System.AppDomain.CurrentDomain.BaseDirectory + DatabaseName + "_log.ldf";
 
                     StringCollection DatabaseFilesCollection = new StringCollection();
@@ -110,10 +102,37 @@ namespace Seller
             }
         }
 
-        private void btnChange_Click(object sender, RoutedEventArgs e)
+        private void btnDataFileName_DefaultButtonClick(object sender, RoutedEventArgs e)
         {
-            
+            Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
+            // Prompt the user to enter a path/filename to save an example Excel file to
+            openFileDialog1.Filter = "Database files (*.mdf)|*.mdf|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
 
+            //  If the user hit Cancel, then abort!
+            if (openFileDialog1.ShowDialog() != true)
+                return;
+
+            btnDataFileName.Text = openFileDialog1.FileName;
+            databaseDataFile = openFileDialog1.FileName;
         }
+
+        private void btnDataLogFileName_DefaultButtonClick(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
+            // Prompt the user to enter a path/filename to save an example Excel file to
+            openFileDialog1.Filter = "Database log files (*.ldf)|*.ldf|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+
+            //  If the user hit Cancel, then abort!
+            if (openFileDialog1.ShowDialog() != true)
+                return;
+
+            btnDataLogFileName.Text = openFileDialog1.FileName;
+            databaseLogFile = openFileDialog1.FileName;
+        }
+
     }
 }

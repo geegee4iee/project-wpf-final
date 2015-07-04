@@ -30,13 +30,9 @@
                         </dxr:RibbonPageGroup>
                     </dxr:RibbonPage>
                     <dxr:RibbonPage Caption="Quản lý " x:Name="rbpQuanLy">
-                        <dxr:RibbonPageGroup  Glyph="{dx:DXImageOffice2013 Image=Team_32x32.png}" IsCaptionButtonEnabled="True">
-                            <dxb:BarButtonItem Content="Định kỳ" x:Name="btnFixedRegister" ItemClick="btnFixedRegister_ItemClick" RibbonStyle="Large"/>
-
-                            <dxb:BarButtonItem x:Name="btnCustomer" ItemClick="btnCustomer_ItemClick" Content="Khách hàng" RibbonStyle="Large" LargeGlyph="{dx:DXImageOffice2013 Image=DocumentMap_32x32.png}"/>
-                        </dxr:RibbonPageGroup>
+                        
                         <dxr:RibbonPageGroup Caption="{x:Null}" x:Name="GroupTonKho">
-                            
+                            <dxb:BarButtonItem x:Name="btnCustomer" ItemClick="btnCustomer_ItemClick" Content="Khách hàng" RibbonStyle="Large" LargeGlyph="{dx:DXImageOffice2013 Image=DocumentMap_32x32.png}"/>
                             <dxb:BarButtonItem x:Name="btnProduct" ItemClick="btnProduct_ItemClick" Content="Sản phẩm" RibbonStyle="Large" LargeGlyph="{dx:DXImageOffice2013 Image=Currency_32x32.png}"/>
                             <dxb:BarButtonItem x:Name="btnCategory" ItemClick="btnCategory_ItemClick" Content="Loại sản phẩm" RibbonStyle="Large" LargeGlyph="{dx:DXImageOffice2013 Image=PackageProduct_32x32.png}"/>
                         </dxr:RibbonPageGroup>
@@ -72,7 +68,7 @@
                             <dxdo:DocumentPanel Caption="Hóa đơn" x:Name="pnOrder" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Orders\\OrderView.xaml}" />
                             <dxdo:DocumentPanel Caption="Sản phẩm" x:Name="pnProduct" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Products\\ProductView.xaml}" />
                             <dxdo:DocumentPanel Caption="Lãi suất" x:Name="pnInterestOfYear" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\InterestOfYears\\InterestView.xaml}" />
-                            <dxdo:DocumentPanel Caption="Đăng kí cố định" x:Name="pFixedRegister" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\FixedRegisters\\FixedRegisterView.xaml}" />
+                            
                             <dxdo:DocumentPanel Caption="Loại sản phẩm" x:Name="pnCategory" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\Categories\\CategoryView.xaml}" />
 
                             <dxdo:DocumentPanel Caption="Import Excel" x:Name="pnImportExcel" MDILocation="100,100"  MDISize="300,250" Content="{dxdo:RelativeUri UriString=Views\\ImportExcel\\ImportExcelView.xaml}" />
