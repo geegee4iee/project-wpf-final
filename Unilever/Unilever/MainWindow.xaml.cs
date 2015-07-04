@@ -61,6 +61,7 @@ namespace Unilever
         private void CloseAllTab()
         {
             pnStaff.Visibility = Visibility.Collapsed;
+            pnInfo.Visibility = Visibility.Collapsed;
             pnCategory.Visibility = Visibility.Collapsed;
             pnImportExcel.Visibility = Visibility.Collapsed;
             pnInterestOfYear.Visibility = Visibility.Collapsed;
