@@ -4,13 +4,33 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DistributorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DistributorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Debt">
+          <Key>
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="SellerId" Type="int" Nullable="false" />
+          <Property Name="Month1" Type="money" />
+          <Property Name="Month2" Type="money" />
+          <Property Name="Month3" Type="money" />
+          <Property Name="Month4" Type="money" />
+          <Property Name="Month5" Type="money" />
+          <Property Name="Month6" Type="money" />
+          <Property Name="Month7" Type="money" />
+          <Property Name="Month8" Type="money" />
+          <Property Name="Month9" Type="money" />
+          <Property Name="Month10" Type="money" />
+          <Property Name="Month11" Type="money" />
+          <Property Name="Month12" Type="money" />
         </EntityType>
         <EntityType Name="IssueDetails">
           <Key>
@@ -107,16 +127,18 @@
           <Property Name="Month" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
+        <Association Name="FK_Debt_Sellers">
+          <End Role="Sellers" Type="Self.Sellers" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sellers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IssueDetails_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="IssueDetails" Type="Self.IssueDetails" Multiplicity="*" />
@@ -215,6 +237,7 @@
         </Association>
         <EntityContainer Name="DistributorModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IssueDetails" EntityType="Self.IssueDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issues" EntityType="Self.Issues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
@@ -223,7 +246,10 @@
           <EntitySet Name="SellerSales" EntityType="Self.SellerSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staffs" EntityType="Self.Staffs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Debt_Sellers" Association="Self.FK_Debt_Sellers">
+            <End Role="Sellers" EntitySet="Sellers" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
           <AssociationSet Name="FK_IssueDetails_Products" Association="Self.FK_IssueDetails_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="IssueDetails" EntitySet="IssueDetails" />
@@ -257,8 +283,7 @@
             <End Role="Stocks" EntitySet="Stocks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DistributorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -338,6 +363,7 @@
           <NavigationProperty Name="IssueDetails" Relationship="Self.FK_IssueDetails_Sellers" FromRole="Sellers" ToRole="IssueDetails" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_Sellers" FromRole="Sellers" ToRole="Issues" />
           <NavigationProperty Name="SellerSales" Relationship="Self.FK_SellerSales_Sellers" FromRole="Sellers" ToRole="SellerSales" />
+          <NavigationProperty Name="Debts" Relationship="DistributorModel.FK_Debt_Sellers" FromRole="Seller" ToRole="Debt" />
         </EntityType>
         <EntityType Name="SellerSale">
           <Key>
@@ -379,16 +405,6 @@
           <Property Name="Month" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Stocks_Products" FromRole="Stocks" ToRole="Products" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_Products_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -496,7 +512,6 @@
           <EntitySet Name="SellerSales" EntityType="Self.SellerSale" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
@@ -529,7 +544,45 @@
             <End Role="Sellers" EntitySet="Sellers" />
             <End Role="SellerSales" EntitySet="SellerSales" />
           </AssociationSet>
+          <EntitySet Name="Debts" EntityType="DistributorModel.Debt" />
+          <AssociationSet Name="FK_Debt_Sellers" Association="DistributorModel.FK_Debt_Sellers">
+            <End Role="Seller" EntitySet="Sellers" />
+            <End Role="Debt" EntitySet="Debts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Debt">
+          <Key>
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="SellerId" Type="Int32" Nullable="false" />
+          <Property Name="Month1" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month2" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month3" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month4" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month5" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month6" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month7" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month8" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month9" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month10" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month11" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Month12" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Seller" Relationship="DistributorModel.FK_Debt_Sellers" FromRole="Debt" ToRole="Seller" />
+        </EntityType>
+        <Association Name="FK_Debt_Sellers">
+          <End Type="DistributorModel.Seller" Role="Seller" Multiplicity="1" />
+          <End Type="DistributorModel.Debt" Role="Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -637,14 +690,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DistributorModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="Debts">
+            <EntityTypeMapping TypeName="DistributorModel.Debt">
+              <MappingFragment StoreEntitySet="Debt">
+                <ScalarProperty Name="Month12" ColumnName="Month12" />
+                <ScalarProperty Name="Month11" ColumnName="Month11" />
+                <ScalarProperty Name="Month10" ColumnName="Month10" />
+                <ScalarProperty Name="Month9" ColumnName="Month9" />
+                <ScalarProperty Name="Month8" ColumnName="Month8" />
+                <ScalarProperty Name="Month7" ColumnName="Month7" />
+                <ScalarProperty Name="Month6" ColumnName="Month6" />
+                <ScalarProperty Name="Month5" ColumnName="Month5" />
+                <ScalarProperty Name="Month4" ColumnName="Month4" />
+                <ScalarProperty Name="Month3" ColumnName="Month3" />
+                <ScalarProperty Name="Month2" ColumnName="Month2" />
+                <ScalarProperty Name="Month1" ColumnName="Month1" />
+                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

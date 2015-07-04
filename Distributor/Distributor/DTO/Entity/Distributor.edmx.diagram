@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="DistributorModel.SellerSale" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DistributorModel.Staff" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DistributorModel.Stock" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DistributorModel.sysdiagram" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="DistributorModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="DistributorModel.FK_IssueDetails_Products" ManuallyRouted="false" />
         <AssociationConnector Association="DistributorModel.FK_IssueDetails_Sellers" ManuallyRouted="false" />
@@ -23,6 +22,8 @@
         <AssociationConnector Association="DistributorModel.FK_SellerSales_Products" ManuallyRouted="false" />
         <AssociationConnector Association="DistributorModel.FK_Stocks_Products" ManuallyRouted="false" />
         <AssociationConnector Association="DistributorModel.FK_SellerSales_Sellers" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DistributorModel.Debt" Width="1.5" PointX="5.25" PointY="18.875" />
+        <AssociationConnector Association="DistributorModel.FK_Debt_Sellers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

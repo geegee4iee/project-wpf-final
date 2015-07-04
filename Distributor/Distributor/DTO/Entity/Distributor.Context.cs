@@ -34,6 +34,6 @@ namespace Distributor.DTO.Entity
         public virtual DbSet<SellerSale> SellerSales { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Debt> Debts { get; set; }
     }
 }
