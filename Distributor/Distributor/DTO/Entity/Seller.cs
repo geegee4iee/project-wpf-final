@@ -18,8 +18,8 @@ namespace Distributor.DTO.Entity
         {
             this.IssueDetails = new HashSet<IssueDetail>();
             this.Issues = new HashSet<Issue>();
-            this.SellerSales = new HashSet<SellerSale>();
             this.Debts = new HashSet<Debt>();
+            this.SellerSales = new HashSet<SellerSale>();
         }
     
         public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace Distributor.DTO.Entity
     
         public virtual ICollection<IssueDetail> IssueDetails { get; set; }
         public virtual ICollection<Issue> Issues { get; set; }
-        public virtual ICollection<SellerSale> SellerSales { get; set; }
         public virtual ICollection<Debt> Debts { get; set; }
+        public virtual ICollection<SellerSale> SellerSales { get; set; }
     }
 }

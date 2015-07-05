@@ -25,7 +25,7 @@ namespace Seller.Views.Orders
         public OrderView()
         {
             InitializeComponent();
-            grdOrderDetails.ItemsSource = lstOrderDetails;
+            grdOrderDetails.ItemsSource = lstOrderDetails; // ben tui chay loi o day 
 
             new DebtDAO().AutoAdd();
             new DebtDAO().AutoUpdate();

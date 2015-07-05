@@ -15,8 +15,8 @@ namespace Distributor.DTO.Entity
     public partial class Sale
     {
         public int ProId { get; set; }
-        public string Year { get; set; }
-        public System.DateTime Month { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
         public Nullable<int> Price { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Sales { get; set; }

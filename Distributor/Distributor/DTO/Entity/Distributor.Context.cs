@@ -29,11 +29,11 @@ namespace Distributor.DTO.Entity
         public virtual DbSet<IssueDetail> IssueDetails { get; set; }
         public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Seller> Sellers { get; set; }
-        public virtual DbSet<SellerSale> SellerSales { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Debt> Debts { get; set; }
+        public virtual DbSet<Sale> Sales { get; set; }
+        public virtual DbSet<SellerSale> SellerSales { get; set; }
     }
 }

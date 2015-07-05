@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unilever.DTO.Entity;
+using Distributor.DTO.Entity;
 
-namespace Unilever.DAO
+namespace Distributor.DAO
 {
     class StockDAO
     {
         public List<Stock> GetAll()
         {
-            using (UnileverEntities entity = new UnileverEntities())
+            using (DistributorEntities entity = new DistributorEntities())
             {
                 return entity.Stocks.ToList();
             }
@@ -21,7 +21,7 @@ namespace Unilever.DAO
         {
             try
             {
-                using (UnileverEntities entity = new UnileverEntities())
+                using (DistributorEntities entity = new DistributorEntities())
                 {
                     entity.Stocks.Add(st);
                     entity.SaveChanges();
@@ -39,10 +39,10 @@ namespace Unilever.DAO
         {
             bool flag = true;
 
-            using (UnileverEntities entity = new UnileverEntities())
+            using (DistributorEntities entity = new DistributorEntities())
             {
-                var st = entity.Stocks.Where(s => s.DistributorId == distributorId 
-                    && s.ProId == proId
+                var st = entity.Stocks.Where(s => 
+                    s.ProId == proId
                     && s.Year == year
                     && s.Month == month)
                     .FirstOrDefault();
@@ -71,10 +71,9 @@ namespace Unilever.DAO
         {
             bool flag = true;
 
-            using (UnileverEntities entity = new UnileverEntities())
+            using (DistributorEntities entity = new DistributorEntities())
             {
-                var stData = entity.Stocks.Where(s => s.DistributorId == st.DistributorId
-                    && s.ProId == st.ProId
+                var stData = entity.Stocks.Where(s =>  s.ProId == st.ProId
                     && s.Year == st.Year
                     && s.Month == st.Month)
                     .FirstOrDefault();

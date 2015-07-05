@@ -94,33 +94,8 @@ namespace Distributor.DAO
             }
         }
 
-        public decimal GetCurrentDebt(int orderId)
-        {
-            using (DistributorEntities ent = new DistributorEntities())
-            {
-                Order ord = ent.Orders.Where(c => c.Id == orderId).FirstOrDefault();
-
-                return ord.Remainder.Value;
-            }
-        }
-
-        public decimal GetTotalDebts(int distrId)
-        {
-            decimal totalDebt = 0;
-
-            using (DistributorEntities ent = new DistributorEntities())
-            {
-                List<Order> lstOrd = ent.Orders.Where(c => c.SellerId == distrId).ToList();
 
 
-                foreach (Order ord in lstOrd)
-                {
-                    totalDebt += ord.Remainder.Value;
-                }
-
-                return totalDebt;
-            }
-        }
 
         public Boolean Add(int distrId, int year)
         {
@@ -227,18 +202,17 @@ namespace Distributor.DAO
             using (DistributorEntities ent = new DistributorEntities())
             {
                 var lstSel = ent.Sellers.ToList();
-                foreach (var dis in lstSel)
+                foreach (var sel in lstSel)
                 {
-                    var lstOrd = dis.Orders.Where(c => c.Remainder != 0).Select(c => c.Id).ToList();
-                    decimal totalDebt = 0;
-                    foreach (var ordId in lstOrd)
+                    var iss = ent.Issues.Where(c => c.DateOfIssue.Year == curYear && c.DateOfIssue.Month == curMonth).OrderByDescending(c => c.DateOfIssue).FirstOrDefault();
+                    if (iss != null)
                     {
-                        totalDebt += new OrderDAO().GetCurrentRemainder(ordId);
+                        Update(sel.Id, curYear, curMonth, iss.Debt.Value);
                     }
-
-                    Update(dis.Id, curYear, curMonth, totalDebt);
                 }
             }
         }
+
+       
     }
 }

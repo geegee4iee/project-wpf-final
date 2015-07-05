@@ -17,9 +17,9 @@ namespace Distributor.DTO.Entity
         public Product()
         {
             this.IssueDetails = new HashSet<IssueDetail>();
+            this.Stocks = new HashSet<Stock>();
             this.Sales = new HashSet<Sale>();
             this.SellerSales = new HashSet<SellerSale>();
-            this.Stocks = new HashSet<Stock>();
         }
     
         public int Id { get; set; }
@@ -32,8 +32,8 @@ namespace Distributor.DTO.Entity
     
         public virtual Category Category { get; set; }
         public virtual ICollection<IssueDetail> IssueDetails { get; set; }
+        public virtual ICollection<Stock> Stocks { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<SellerSale> SellerSales { get; set; }
-        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }
