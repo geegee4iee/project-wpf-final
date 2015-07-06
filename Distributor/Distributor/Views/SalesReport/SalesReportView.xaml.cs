@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Distributor.DAO;
 
 namespace Distributor.Views.SalesReport
 {
@@ -25,6 +26,8 @@ namespace Distributor.Views.SalesReport
         public SalesReportView()
         {
             InitializeComponent();
+            new SaleDAO().AutoAdd();
+            new StockDAO().AutoAdd();
         }
 
         private void btnOpenReport_Click(object sender, RoutedEventArgs e)

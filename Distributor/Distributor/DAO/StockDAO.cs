@@ -91,5 +91,40 @@ namespace Distributor.DAO
 
             return flag;
         }
+
+        public void AutoAdd()
+        {
+            int curMonth = DateTime.Today.Month;
+            int curYear = DateTime.Today.Year;
+
+            using (DistributorEntities ent = new DistributorEntities())
+            {
+                var lstProcs = ent.Products.ToList();
+                foreach (var proc in lstProcs)
+                {
+                    int totalSales = 0;
+                    totalSales += ent.Sales.Where(c => c.ProId == proc.Id && c.Year == curYear && c.Month == curMonth).Sum(c => c.Quantity.Value);
+                    Stock stk = ent.Stocks.Where(c => c.ProId == proc.Id && c.Month == curMonth && c.Year == curYear).FirstOrDefault();
+                    if (stk == null)
+                    {
+                        stk = new Stock
+                        {
+                            ProId = proc.Id,
+                            Month = curMonth,
+                            Year = curYear,
+                            Quantity = proc.Quantity.Value - totalSales
+                        };
+
+                        ent.Stocks.Add(stk);
+                    }
+                    else
+                    {
+                        stk.Quantity = proc.Quantity.Value - totalSales;
+                    }
+
+                    ent.SaveChanges();
+                }
+            }
+        }
     }
 }
